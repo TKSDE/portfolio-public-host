@@ -1,0 +1,499 @@
+.wallet-page-1 img {
+    object-fit: contain;
+    width: 90%;
+    height: 300px;
+}
+
+.wallet-page-1 .crypt-in-box-l h1 {
+    font-size: 35px;
+    font-weight: 900;
+    line-height: 55px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.wallet-page-1 .crypt-in-box.cryexbx {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+}
+
+
+.feature-item-inner {
+    display: flex;
+    box-shadow: 0px 11px 35px 5px rgba(196, 196, 196, 0.30);
+    padding: 40px 30px;
+    border-radius: 3px;
+    margin-top: 30px;
+    border-radius: 20px 5px;
+    background: #fff;
+}
+
+.feature-item-thumb {
+    flex: 0 0 70px;
+    -ms-flex: 0 0 80px;
+    max-width: 70px;
+    width: 70px;
+    margin-right: 35px;
+    transform: translate(0px, 0px);
+    transition: transform 0.3s cubic-bezier(0.25, 0.55, 0.4, 2.1) 0s;
+}
+
+.feature-item-thumb img {
+    max-width: 100%;
+}
+
+.feature-item-content {
+    width: 100%;
+}
+
+.feature-item-content h3,
+.feature-item-content span {
+    font-size: 19px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 15px;
+}
+
+.feature-item-content p {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+.feature-item-inner:hover .feature-item-thumb {
+    transform: translate(0px, -10px);
+}
+
+
+
+.currency-page-6 .exchange-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0 auto;
+}
+
+.currency-page-6 .card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+    height: max-content !important;
+    border-top: 1px solid #cdcdcd;
+    border-left: 1px solid #cdcdcd;
+}
+
+.currency-page-three .card .back-box-c {
+    border-radius: 12px;
+    padding: 10px 3px 20px;
+    transition: 0.3s ease;
+    height: 260px;
+}
+
+.currency-page-6 .card img {
+    width: 40px;
+    margin-bottom: 5px;
+    object-fit: contain;
+}
+
+.currency-page-6 .card h3 {
+    line-height: 26px;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 20px;
+}
+
+.currency-page-6 .card p {
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+
+
+.service-ne-box .nft-features .why-box {
+    width: 95%;
+    padding: 20px 35px;
+    display: flex;
+    background: #fff;
+    border-radius: 20px 50px 20px 50px;
+    /* box-shadow: 5px 5px 10px #ddd; */
+    /* min-height: 400px !important; */
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 1px solid #8fccff;
+    transition: 0.5s;
+    margin-bottom: 20px;
+    margin: 0px 20px 0px;
+}
+
+.cd-new-sec .service-ne-box .nft-features .why-box {
+    min-height: 400px;
+    width: 100% !important;
+    margin: 0px 0px 20px !important;
+}
+
+.nft-features .why-b-icon {
+    display: flex;
+    border: 0 solid #4966c4;
+    border-radius: 0;
+    transition: 0.3s ease-in-out;
+    border-radius: 100px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 15px 20px;
+    width: 90px;
+    background: #fff;
+    height: 90px;
+    box-shadow: 1px 2px 3px #ddd;
+}
+
+.why-b-con h3 {
+    font-weight: 600;
+    margin: 30px 0 20px 0;
+    font-size: 19px;
+    line-height: 28px;
+    /* min-height: 60px; */
+}
+
+.nft-features .why-box .why-b-con p {
+    color: #656566;
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    font-size: 13px;
+    line-height: 26px;
+    /* -webkit-line-clamp: 5; */
+    -webkit-box-orient: vertical;
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
+    max-height: 150px;
+}
+
+.cd-new-sec .nft-features .why-box .why-b-con p {
+    font-size: 14px !important;
+}
+
+.nft-features .why-box:hover {
+    box-shadow: 8px 8px 13px #ddd;
+    border-radius: 10px;
+}
+
+.crypt-exchange ul.we_specialize.p-0 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+}
+
+.crypt-exchange ul.we_specialize.p-0 li {
+    background: #fff;
+    box-shadow: 0 1px 10px #d0cdcd;
+    padding: 15px 21px;
+    border-radius: 6px;
+    display: inline-flex;
+    margin: 15px 10px;
+    border: 1px solid #dbdbdb;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.we_specialize li i {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #444242;
+}
+
+.feature-sec-card .card-bg {
+    border: 1px solid #8fccff;
+    border-radius: 16px;
+    /* background: linear-gradient(white, white) padding-box, 
+linear-gradient(45deg, #f06, #4a90e2) border-box; */
+    padding: 20px 10px;
+    height: auto;
+    width: 100%;
+    box-shadow: 0 0 10px rgb(0 0 0 / 24%);
+    min-height: 100%;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+.feature-sec-card .card-bg .icon-box {
+    position: relative;
+    top: 0px;
+    margin: -60px auto 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.feature-sec-card .card-bg .icon-box .icon-bg {
+    position: relative;
+    height: 85px;
+    width: 85px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 100%;
+    box-shadow: 0 0 10px rgb(0 0 0 / 19%);
+}
+
+.feature-sec-card .card-bg .icon-box .icon-bg::after {
+    content: "";
+    position: absolute;
+    height: 85px;
+    width: 85px;
+    border-radius: 50%;
+    /* background: radial-gradient(closest-side, white 97%, transparent 100%), repeating-conic-gradient(#4a90e2 -145deg 20deg, transparent 0 32deg); */
+    z-index: 0;
+    box-shadow: 0 0 10px rgb(0 0 0 / 12%);
+    border: 1px solid #8fccff;
+    /* border-spacing: 10px; */
+}
+
+.feature-sec-card .card-bg .icon-box .card-icon {
+    position: absolute;
+    top: 20px;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto;
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+.feature-sec-card .card-bg .inner-text .heading {
+    /* background-image: linear-gradient(to right, #7e0db3, #ae00a2, #cf0090, #e7137e, #f73c6e); */
+    /* background-clip: text; */
+    /* -webkit-background-clip: text; */
+    /* -webkit-text-fill-color: transparent; */
+    font-style: normal;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+    padding-top: 30px;
+    margin: 0 0 7px 0;
+}
+
+.feature-sec-card .card-bg .inner-text .sub-heading {
+    color: #000;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+    padding: 10px 5px;
+    text-align: center;
+    width: 90%;
+    margin: auto;
+}
+
+.currency-page-9 .new-process .roadmap_box {
+    height: 230px;
+}
+
+
+
+
+
+
+.we-servce-box {
+    padding: 20px;
+    background: #fff;
+    margin-top: 20px;
+    border-radius: 20px 0 0px 20px;
+    box-shadow: 2px 5px 1px #eee;
+    border: 1px solid #eee;
+    display: grid;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.5s;
+}
+
+.we-servce-box img {
+    max-width: 40px;
+    margin: 5px auto 15px;
+}
+
+.we-servce-box:hover {
+    border-radius: 0px 20px 20px 0px;
+    box-shadow: 1px 3px 4px #1c5d9f;
+}
+
+.working_img {
+    animation: jumping 3s linear 0s infinite alternate;
+}
+
+@keyframes jumping {
+    0% {
+        transform: translateY(5px);
+    }
+
+    100% {
+        transform: translateY(-25px);
+    }
+}
+
+.card-slider .card {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+    /* font-weight: bold; */
+}
+
+.card-slider .slick-prev,
+.card-slider .slick-next {
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 35px;
+    height: 35px;
+    z-index: 2;
+    position: absolute;
+    top: 45%;
+    border: 2px solid #333;
+}
+
+button.slick-prev.slick-arrow {
+    left: 0px;
+    font-size: 0px;
+}
+
+button.slick-prev.slick-arrow::before {
+    position: absolute;
+    content: "\F284";
+    top: 5px;
+    font-size: 15px;
+    color: #000;
+    left: 10px;
+    font-family: "bootstrap-icons";
+}
+
+button.slick-next.slick-arrow {
+    right: 0px;
+    font-size: 0px;
+}
+
+button.slick-next.slick-arrow::before {
+    position: absolute;
+    content: "\F285";
+    top: 5px;
+    font-size: 15px;
+    color: #000;
+    left: 10px;
+    font-family: "bootstrap-icons";
+}
+
+.card-slider .slick-prev:before,
+.card-slider .slick-next:before {
+    color: black;
+    font-size: 0px;
+}
+
+.card-slider .slick-disabled {
+    opacity: 0.3 !important;
+    pointer-events: none;
+}
+
+.currency-page-6 .card img {
+    margin: 0 auto;
+}
+
+
+
+
+.card-slider .slick-arrow,
+.card-slider .slick-dots {
+    display: flex !important;
+}
+
+@media screen and (max-width: 450px) {
+    .wallet-page-1 .crypt-in-box.cryexbx {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wallet-page-1 .crypt-in-box-l h1 {
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 42px;
+    }
+
+    .wallet-page-1 .mob-img-none img {
+        object-fit: contain;
+        width: 100%;
+        height: auto;
+        margin-top: 40px;
+    }
+
+    .btn-mid {
+        flex-direction: column !important;
+        gap: 15px;
+    }
+
+    .currency-page-14 .tab-tech-one {
+        margin-top: 30px;
+    }
+
+
+    .currency-page-five .tab-tech-one {
+        margin-top: 30px;
+    }
+
+    .btn-mid button {
+        justify-content: center;
+    }
+
+
+
+    .cry-box-we-serve {
+        grid-template-columns: 2fr 2fr;
+    }
+
+    .tab-tech-one {
+        margin-top: 30px;
+    }
+
+    p.w-80 {
+        width: 100% !important;
+    }
+
+    .bann-dd .mb-50 img {
+        width: 100% !important;
+    }
+
+    .feature-item-thumb {
+        margin: 0px;
+    }
+
+    .currency-page-6 .exchange-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .service-ne-box .nft-features {
+        margin: 30px 0px 0px !important;
+    }
+
+    .crypt-exchange ul.we_specialize.p-0 {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .crypt-exchange ul.we_specialize.p-0 li {
+        margin: 10px;
+        padding: 8px 15px;
+    }
+
+    .service-ne-box .nft-features .why-box {
+        width: 100%;
+    }
+
+    .nft-features .why-box .why-b-con p {
+        max-height: max-content;
+    }
+}

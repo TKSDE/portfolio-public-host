@@ -1,0 +1,494 @@
+.currency-page-1 .banner-top-tag {
+    color: #fff;
+    background-image: linear-gradient(to right, #7e0db3, #ae00a2, #cf0090, #e7137e, #f73c6e);
+    width: max-content;
+    padding: 15px 20px;
+    border-radius: 0px 0px 30px 0px;
+}
+
+.crypt-in-box {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+}
+
+.currency-page-1 h1 {
+    padding: 15px 15px 0px 0px;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 55px;
+    margin-bottom: 10px;
+    width: 90%;
+    text-transform: uppercase;
+    color: #141414;
+}
+
+.currency-page-1 p {
+    font-size: 15px;
+    line-height: 28px;
+    font-weight: 500;
+    width: 92%;
+}
+
+.gradient-border {
+    display: inline-block;
+    padding: 2px;
+    border-radius: 12px;
+    background: linear-gradient(to right, #7e0db3, #ae00a2, #cf0090, #e7137e, #f73c6e);
+    padding: 0px !important;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.right_btn {
+    font-weight: 600;
+    color: #ffffff;
+    z-index: 4;
+    border-radius: 12px 12px 0 0;
+    position: relative;
+    overflow: hidden;
+    transition: 1s;
+    transform: scale(0.9);
+}
+
+.gradient-text {
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    background-clip: text;
+    color: transparent;
+}
+
+.right_btn:after {
+    content: "";
+    width: 10px;
+    top: -163px;
+    height: 205px;
+    rotate: 38deg;
+    background: #fff;
+    opacity: 0.2;
+    left: 0;
+    position: absolute;
+    animation: drift 2s linear infinite;
+    box-shadow: 0px 0px 26px #fff;
+}
+
+.currency-page-1 img {
+    object-fit: contain;
+    width: auto;
+}
+
+.crypt-in-box-l p {
+    font-size: 15px;
+    line-height: 28px;
+    font-weight: 500;
+    width: 95%;
+    padding-top: 10px;
+}
+
+.currency-page-two .mb-50 img {
+    width: 100%;
+}
+
+.currency-page-two .crypt-exchange-in p {
+    width: 90%;
+    margin: auto;
+    line-height: 26px;
+    font-size: 15px;
+    color: #3c3c3c;
+}
+
+.currency-page-6 .exchange-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0 auto;
+}
+
+.currency-page-6 .card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+    height: max-content !important;
+    border-top: 1px solid #cdcdcd;
+    border-left: 1px solid #cdcdcd;
+}
+
+.currency-page-three .card .back-box-c {
+    border-radius: 12px;
+    padding: 20px 12px;
+    transition: 0.3s ease;
+    height: 290px;
+}
+
+.currency-page-6 .card img {
+    width: 50px;
+    margin-bottom: 5px;
+}
+
+.currency-page-6 .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 20px;
+}
+
+.currency-page-6 .card p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.currency-page-three .card h3 a {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-decoration: none;
+    color: #000;
+}
+
+.currency-page-6 .card:hover {
+    border-color: #f73c6e;
+}
+
+.currency-page-6 .card:hover .back-box-c {
+    background: #f73c6e;
+}
+
+.currency-page-6 .card:hover img {
+    filter: invert(1);
+}
+
+.currency-page-6 .card:hover h3,
+.currency-page-6 .card:hover p,
+.currency-page-6 .card:hover a {
+    color: #fff;
+}
+
+.crypt-exchange-in h2 {
+    /* text-transform: uppercase; */
+    font-size: 30px !important;
+}
+
+.trading-bot-one .feature-item-content {
+    background: #fff;
+    padding: 30px 30px 20px;
+    min-height: 205px;
+    box-shadow: 0px 11px 35px 5px rgba(196, 196, 196, 0.30);
+    border-radius: 30px 10px;
+    height: 205px;
+}
+
+.trading-bot-one .feature-item-content .bot-feature .slick-prev:before,
+.slick-next:before {
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+    opacity: .75;
+    color: rgb(0, 0, 0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.trading-bot-one .feature-item-content .bot-feature .slick-arrow {
+    display: block !important;
+}
+
+.trading-bot-one .feature-item-content .bot-feature .slick-prev {
+    font-size: 0px;
+    border-color: transparent;
+    border-radius: 100%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 24px;
+    background: #000;
+    position: absolute;
+    bottom: -30px;
+    left: 0px;
+}
+
+.trading-bot-one .feature-item-content .bot-feature .slick-next {
+    font-size: 0px;
+    border-color: transparent;
+    border-radius: 100%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 24px;
+    background: #000;
+    left: 40px;
+    position: absolute;
+    bottom: -30px;
+}
+
+.trading-bot-one .feature-item-content .bot-feature .slick-prev:before {
+    content: '←';
+}
+
+.trading-bot-one .feature-item-content .bot-feature .slick-prev::before {
+    content: "\F284";
+    /* bi-arrow-left */
+    font-family: 'bootstrap-icons';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    opacity: 1;
+}
+
+.trading-bot-one .feature-item-content .bot-feature .slick-next::before {
+    content: "\F285";
+    /* bi-arrow-right */
+    font-family: 'bootstrap-icons';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    opacity: 1;
+}
+
+.currency-new-cta {
+    background: url(../../assets/currency-cta-bg.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    background-position: bottom;
+    padding: 80px 0px;
+}
+
+.currency-new-cta .row {
+    justify-content: end;
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+}
+
+.currency-new-cta .crypt-exchange-in {
+    background: #ffffffd9;
+    padding: 20px 40px;
+}
+
+.currency-new-cta .crypt-exchange-in h2 {
+    font-size: 26px !important;
+    line-height: 38px !important;
+    margin: 0 0 14px 0;
+}
+
+.currency-new-cta .crypt-exchange-in p {
+    font-size: 18px;
+    color: #000;
+}
+
+.currency-new-cta .crypt-exchange-in .btn-mid {
+    margin-top: 20px !important;
+}
+
+.currency-new-cta .crypt-exchange-in button {
+    border-radius: 0px;
+    background: #071d4a;
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.it_serbox {
+    transition: all .5s ease 0s;
+    margin: 0 0 30px;
+    padding: 25px 15px 15px;
+    width: 100%;
+    height: 145px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+    background: #fff;
+}
+
+.it_serbox img {
+    width: auto;
+}
+
+span.stackhead {
+    color: #313131;
+    font-weight: 500;
+    line-height: 28px;
+    margin-top: 15px;
+    font-size: 16px;
+    display: inline-block;
+    width: 100%;
+}
+
+.it_serbox:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, .5);
+}
+
+
+.new-tech-stack-ex .blocktech-img img {
+    width: 100%;
+}
+
+.currency-page-9 .new-process .roadmap_box {
+    height: 240px;
+}
+
+.currency-page-four .new-process .roadmap_box h3 {
+    font-size: 17px !important;
+    color: #000;
+}
+
+.currency-type-sect .card {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    transition: 0.5s;
+    border-radius: 14px;
+    padding: 20px 20px 20px 10px;
+    height: 100%;
+    flex-direction: row;
+    column-gap: 20px;
+}
+
+.currency-type-sect .card img {
+    height: 75px;
+    padding: 0px 10px 0px 20px;
+}
+
+.new-ex-change .card {
+    border: 1px solid #cdcdcd;
+    padding: 0px;
+}
+
+.new-ex-change .card .back-box-c {
+    border-radius: 12px;
+    transition: 0.3s ease;
+    padding: 15px;
+    height: 180px;
+    /* min-height: 100%; */
+}
+
+.new-ex-change .card h3 {
+    padding: 0;
+    margin: 10px 10px 12px;
+}
+
+.new-ex-change .card p {
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    padding-left: 10px;
+}
+
+p.card-text.Discovery-crypto-alignments {
+    font-size: 13px;
+    line-height: 24px;
+}
+
+@media screen and (max-width: 450px) {
+    .currency-page-1 img {
+        object-fit: contain;
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+    }
+
+    .crypt-in-box {
+        display: block;
+        grid-template-columns: 1.3fr 1fr;
+    }
+
+    .crypt-in-box-r {
+        margin-top: 20px;
+    }
+
+    .currency-page-1 h1 {
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 44px;
+        width: 100%;
+    }
+
+    .crypt-exchange-in .btn-mid {
+        margin-top: 40px !important;
+        display: flex !important;
+        /* width: 100%; */
+        /* grid-column-gap: 20px !important; */
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .trading-bot-one .feature-item-content {
+        height: 230px;
+    }
+
+    .row.mt-4.mb-4.mob-new-stack-c {
+        display: flex;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        flex-direction: row !important;
+        flex-wrap: nowrap;
+        overflow: scroll;
+    }
+
+    .mob-new-stack-c .col-xs-6.col-md-3.col-lg-2 {
+        width: max-content;
+    }
+
+    .it_serbox {
+        width: 200px;
+    }
+
+    .blocktech-img {
+        width: 90%;
+        overflow-x: auto;
+        border-radius: 5px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .blocktech-img img {
+        /* max-width: inherit !important; */
+        /* height: 330px; */
+        height: 400px;
+        width: auto !important;
+    }
+
+    .currency-page-13 .tab-tech-oneIn {
+        margin-top: 30px;
+    }
+
+    .currency-type-sect .card img {
+        display: none;
+    }
+
+    .currency-type-sect .card {
+        padding: 20px
+    }
+
+    .currency-page-6 .exchange-grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+}

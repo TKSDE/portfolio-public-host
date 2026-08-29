@@ -1,0 +1,231 @@
+.wallet-page-1 img {
+    object-fit: contain;
+    width: 100%;
+    height: 400px;
+}
+
+.wallet-page-1 .crypt-in-box-l h1 {
+    font-size: 35px;
+    font-weight: 900;
+    line-height: 55px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.wallet-page-1 .crypt-in-box.cryexbx {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+}
+
+
+.ourservices_pg {
+    text-align: center;
+    background: #f5f6f6;
+    padding: 50px 0;
+}
+
+.ourservices_pg h3 {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+section p {
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.choose-bg {
+    padding: 50px 0 70px;
+    background: #0b1222;
+    color: #fff;
+}
+
+.choose-nft p{
+    color: #fff !important;
+}
+
+.choose-nft .col-md-3.br {
+    border-right: 1px solid rgb(255 255 255 / 25%);
+}
+
+.service_nftbox {
+    padding: 35px 20px;
+    text-align: center;
+    border-radius: 20px;
+    height: 360px;
+    transition: all .4s ease-out;
+    -webkit-transition: all .4s ease-out;
+}
+
+.service_nftbox h4,
+.service_nftbox h3 {
+    line-height: 26px;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.service_nftbox p {
+    font-weight: 200;
+    line-height: 24px;
+    letter-spacing: 1px;
+    font-size: 14px;
+    color: #dfdfdf;
+}
+
+.work_process h2,
+.choose-nft h2,
+.nft_marketplace h3 {
+    color: #fff;
+    text-align: center;
+}
+
+.inner_hding {
+    padding: 60px 0 40px;
+}
+
+.hadding5,
+.inner_hding h2,
+.inner_hding h3 {
+    font-size: 32px;
+    line-height: 45px;
+    color: #000;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.why_go_with h3 {
+    font-size: 32px;
+    line-height: 45px;
+    color: #000;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.why_go_with .tj p {
+    text-align: justify;
+}
+
+.why_go_with .why_go_mar {
+    margin-top: 30px;
+}
+
+.why_go_with .img-responsive {
+    height: 360px;
+}
+
+
+
+
+
+
+.popop_box_home {
+    color: rgb(255, 255, 255);
+    background: url("../../assets/popop_box_home.webp") 0% 0% / cover no-repeat;
+    padding: 50px 0px 40px;
+}
+
+.popop_box_home h4,
+.popop_box_home h2 {
+    font-size: 33px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #fff;
+}
+
+.popop_box_home p {
+    text-align: left;
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.banner_btn,
+.banner_btn:hover {
+    background-image: linear-gradient(to right, rgb(126, 13, 179), rgb(174, 0, 162), rgb(207, 0, 144), rgb(231, 19, 126), rgb(247, 60, 110));
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    position: relative;
+    overflow: hidden;
+    border: 0px;
+}
+
+.after_btn::after {
+    content: "";
+    width: 10px;
+    top: 0px;
+    height: 165px;
+    rotate: 330deg;
+    opacity: 0.5;
+    left: 0px;
+    position: absolute;
+    background: rgb(255, 255, 255);
+    animation: 2s linear 0s infinite normal none running drift;
+}
+
+
+@media screen and (max-width: 450px) {
+    .wallet-page-1 .crypt-in-box.cryexbx {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wallet-page-1 .crypt-in-box-l h1 {
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 42px;
+    }
+
+    .wallet-page-1 .mob-img-none img {
+        object-fit: contain;
+        width: 100%;
+        height: auto;
+        margin-top: 40px;
+    }
+
+    .service_nftbox {
+        padding: 15px;
+        height: auto !important;
+    }
+
+    .service_nftbox {
+        height: auto;
+    }
+
+    .why_go_with .img-responsive {
+        height: auto;
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .popop_box_home h4,
+    .popop_box_home h2 {
+        font-size: 20px;
+        line-height: 1.3;
+        font-weight: 400;
+        color: #fff;
+        text-align: center;
+    }
+
+    .popop_box_home p {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .popop_box_home .banner_btn {
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+}

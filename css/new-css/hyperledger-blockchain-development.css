@@ -1,0 +1,402 @@
+.wallet-page-1 img {
+    object-fit: contain;
+    width: 90%;
+    height: 400px;
+}
+
+.wallet-page-1 .crypt-in-box-l h1 {
+    font-size: 35px;
+    font-weight: 900;
+    line-height: 55px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.wallet-page-1 .crypt-in-box.cryexbx {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+}
+
+
+.currency-page-6 .exchange-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0 auto;
+}
+
+.currency-page-6 .card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+    height: max-content !important;
+    border-top: 1px solid #cdcdcd;
+    border-left: 1px solid #cdcdcd;
+}
+
+.currency-page-three .card .back-box-c {
+    border-radius: 12px;
+    padding: 20px 12px;
+    transition: 0.3s ease;
+    height: 260px;
+}
+
+.currency-page-6 .card img {
+    width: 40px;
+    margin-bottom: 5px;
+}
+
+.currency-page-6 .card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.currency-page-6 .card p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.currency-page-6 .card:hover {
+    border-color: #f73c6e;
+}
+
+.currency-page-6 .card:hover .back-box-c {
+    background: #f73c6e;
+}
+
+.currency-page-6 .card:hover img {
+    filter: invert(1);
+}
+
+.currency-page-6 .card:hover h3,
+.currency-page-6 .card:hover p,
+.currency-page-6 .card:hover a {
+    color: #fff;
+}
+
+
+
+
+
+.cry-box-we-serve {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+    /* padding-right: 20px; */
+}
+
+.we-serve-box {
+    background-color: rgba(133, 177, 248, 0.1);
+    border-radius: 5px;
+    margin-top: 30px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.5s;
+    border: 1px solid rgba(133, 177, 248, 0.1);
+}
+
+.we-serve-box em {
+    font-weight: bold;
+    font-size: 15px;
+    font-style: normal;
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.we-serve-box:hover {
+    border: 1px solid rgba(133, 177, 248, 0.5);
+    background: #fff;
+}
+
+.we-serve-box span img {
+    /* width: 80px; */
+    height: 45px;
+    margin-bottom: 8px;
+}
+
+
+.currency-page-9 .new-process .roadmap_box {
+    height: 220px;
+}
+
+
+
+
+
+
+
+
+.feature-item-inner {
+    display: flex;
+    box-shadow: 0px 11px 35px 5px rgba(196, 196, 196, 0.30);
+    padding: 40px 30px;
+    border-radius: 3px;
+    margin-top: 30px;
+    border-radius: 20px 5px;
+    background: #fff;
+    min-height: 240px;
+}
+
+.feature-item-inner p {
+    margin: 0px;
+    font-size: 14px;
+    line-height: 26px;
+}
+
+.feature-item-thumb img {
+    max-width: 100%;
+}
+
+.feature-item-thumb {
+    flex: 0 0 70px;
+    -ms-flex: 0 0 80px;
+    max-width: 70px;
+    width: 70px;
+    margin-right: 15px;
+    transform: translate(0px, 0px);
+    transition: transform 0.3s cubic-bezier(0.25, 0.55, 0.4, 2.1) 0s;
+}
+
+
+
+.crypt-exchange fieldset.card {
+    border: 2px dotted #6c4192;
+    background: 0 0;
+    border-radius: 14px;
+    padding: 20px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    margin-top: 30px;
+    min-height: 220px;
+    background: #fff;
+    transition: 0.5s;
+}
+
+.top-binance-new-banner-number-section {
+    font-size: 23px;
+    margin-bottom: 0;
+    font-weight: 700;
+    background: #8d12ab;
+    border: 0;
+    border-radius: 10px 25px 21px 22px;
+    width: 60px !important;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    box-shadow: 1px 2px 5px #ddd;
+    color: #fff;
+    transition: 0.5s;
+}
+
+.crypt-exchange .card-title {
+    margin-bottom: 16px;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 35px;
+    margin: 0 0 16px 0;
+    padding: 0;
+}
+
+.crypt-exchange .card .card-text,
+.crypt-exchange .card .card-text {
+    font-size: 14px;
+    width: 98%;
+    margin: auto;
+    line-height: 22px;
+    margin: 0;
+}
+
+.crypt-exchange .card:hover {
+    border-radius: 50px 10px 50px 10px;
+}
+
+.crypt-exchange .card:hover .top-binance-new-banner-number-section {
+    border-radius: 22px 21px 25px 10px;
+}
+
+
+
+
+.nft-features.game-box-one.net-market {
+    margin-top: 30px;
+}
+
+.nft-features.game-box-one .why-box {
+    height: auto;
+    align-items: start;
+    background: #fff;
+    border-radius: 20px 50px 20px 50px;
+    box-shadow: 5px 5px 10px #ddd;
+    min-height: 440px !important;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 1px solid #8fccff;
+    transition: 0.5s;
+    padding: 20px 35px;
+    display: flex;
+}
+
+.nft-features .why-b-icon {
+    display: flex;
+    border: 0 solid #4966c4;
+    border-radius: 0;
+    transition: 0.3s ease-in-out;
+    border-radius: 100px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    padding: 15px 20px;
+    width: 90px;
+    border-radius: 100px;
+    background: #fff;
+    height: 90px;
+    box-shadow: 1px 2px 3px #ddd;
+}
+
+.nft-features .why-box:hover {
+    box-shadow: 8px 8px 13px #ddd;
+    border-radius: 10px;
+}
+
+.why-b-con h3,
+.why-b-con p {
+    text-align: left;
+    font-weight: 600;
+    margin: 30px 0 20px 0;
+    font-size: 19px;
+    line-height: 28px;
+}
+
+.nft-features .why-box .why-b-con p {
+    color: #656565;
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0px;
+    -webkit-box-orient: vertical;
+    max-height: 150px;
+}
+
+@media screen and (max-width: 450px) {
+    .wallet-page-1 .crypt-in-box.cryexbx {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wallet-page-1 .crypt-in-box-l h1 {
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 42px;
+    }
+
+    .wallet-page-1 .mob-img-none img {
+        object-fit: contain;
+        width: 100%;
+        height: auto;
+        margin-top: 40px;
+    }
+
+    .bot-new-two .mb-50 img {
+        width: 100%;
+    }
+
+    .btn-mid {
+        flex-direction: column !important;
+        gap: 15px;
+    }
+
+    .currency-page-14 .tab-tech-one {
+        margin-top: 30px;
+    }
+
+    .wallet-page-7 .features-card-w {
+        min-height: 145px;
+    }
+
+    .wallet-page-7 .tab-content .tab-pane .row {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        overflow: scroll;
+    }
+
+    .bot-trading-tech .tab-tech .nav-tabs {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        overflow: scroll;
+        padding: 0px 0px 10px;
+    }
+
+    .currency-page-five .tab-tech-one {
+        margin-top: 30px;
+    }
+
+    .btn-mid button {
+        justify-content: center;
+    }
+
+    .wallet-card-6 .card .back-box-c {
+        height: 240px;
+    }
+
+    .currency-page-6 .exchange-grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .cry-box-we-serve {
+        grid-template-columns: 2fr 2fr;
+    }
+
+    .tab-tech-one {
+        margin-top: 30px;
+    }
+
+
+    .table-defi-box {
+        grid-template-columns: 150px 150px 150px;
+    }
+
+    .table-defi {
+        overflow-y: auto;
+        display: grid;
+    }
+
+    .table-defi-box span,
+    .table-defi-box p {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    p.w-80,
+    p.w-90,
+    h2.w-80 {
+        width: 100% !important;
+    }
+
+    .feature-item-thumb {
+        display: none;
+    }
+
+    .feature-item-inner {
+        padding: 30px 20px;
+    }
+
+
+}
