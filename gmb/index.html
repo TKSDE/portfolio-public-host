@@ -249,6 +249,43 @@
           </button>
         </div>
 
+        <!-- Add / Sync Real Google Review Form -->
+        <div class="card mt-3" style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3);">
+          <div class="card-header">
+            <div class="flex items-center gap-2">
+              <span class="badge badge-glow">Live Google Review</span>
+              <h3>Add Verified Customer Review from Google Search</h3>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="form-add-real-review" onsubmit="handleAddRealReview(event)">
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="real-reviewer-name">Customer Name</label>
+                  <input type="text" id="real-reviewer-name" class="form-input" placeholder="e.g. Client Name on your Google Profile" required>
+                </div>
+                <div class="form-group" style="width: 170px;">
+                  <label for="real-review-rating">Rating</label>
+                  <select id="real-review-rating" class="form-input">
+                    <option value="5">★★★★★ (5 Stars)</option>
+                    <option value="4">★★★★☆ (4 Stars)</option>
+                    <option value="3">★★★☆☆ (3 Stars)</option>
+                    <option value="2">★★☆☆☆ (2 Stars)</option>
+                    <option value="1">★☆☆☆☆ (1 Star)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="real-review-comment">Review Feedback / Comment</label>
+                <textarea id="real-review-comment" class="form-input" rows="2" placeholder="Copy & paste the actual review comment from your Google Business Profile..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm">
+                ✨ Save Real Review & Generate AI Auto-Reply
+              </button>
+            </form>
+          </div>
+        </div>
+
         <div class="card mt-3">
           <div class="card-body">
             <div id="reviews-feed" class="reviews-feed">

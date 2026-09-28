@@ -412,6 +412,34 @@ async function syncReviewsNow() {
 }
 window.syncReviewsNow = syncReviewsNow;
 
+async function handleAddRealReview(e) {
+  e.preventDefault();
+  const reviewerName = document.getElementById('real-reviewer-name').value;
+  const starRating = document.getElementById('real-review-rating').value;
+  const comment = document.getElementById('real-review-comment').value;
+
+  try {
+    showAlert('Saving review and generating Gemini AI auto-reply...', 'success');
+    const res = await gmbFetch('/api/reviews/add-real', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reviewerName, starRating, comment })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showAlert('Real review added! Gemini AI generated an intelligent reply.', 'success');
+      document.getElementById('form-add-real-review').reset();
+      await loadReviews();
+      await initAuth();
+    } else {
+      showAlert(`Failed to add review: ${data.error}`, 'error');
+    }
+  } catch (err) {
+    showAlert(`Error: ${err.message}`, 'error');
+  }
+}
+window.handleAddRealReview = handleAddRealReview;
+
 // ==========================================================================
 // CALENDAR & POST SCHEDULING (VIDEO 00:12 - 00:16)
 // ==========================================================================
