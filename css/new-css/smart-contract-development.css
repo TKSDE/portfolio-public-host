@@ -1,0 +1,632 @@
+.bg-remove-img {
+    background: linear-gradient(135deg, rgba(240, 248, 255, 1) 0%, rgba(230, 240, 255, 0.9) 25%, rgba(220, 235, 250, 0.8) 50%, rgba(200, 220, 255, 0.7) 75%, rgba(240, 240, 255, 1) 100%);
+}
+
+.wallet-page-1 .crypt-in-box-l h1 {
+    font-size: 35px;
+    font-weight: 900;
+    line-height: 55px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.crypt-in-box {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+}
+
+.currency-page-1 .banner-white-box {
+    background: #fff;
+    margin-left: -14px;
+    box-shadow: 4px 0px 30px #0000005e;
+    border-radius: 0px 300px 300px 0px;
+}
+
+.currency-page-1 .banner-white-box .banner-top-tag {
+    color: #fff;
+    background-image: linear-gradient(to right, #7e0db3, #ae00a2, #cf0090, #e7137e, #f73c6e);
+    width: max-content;
+    padding: 15px 20px;
+    border-radius: 0px 0px 30px 0px;
+}
+
+.currency-page-1 .banner-white-box h1 {
+    padding: 15px 15px 0px 20px;
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 47px;
+    margin-bottom: 10px;
+    width: 90%;
+    text-transform: uppercase;
+    color: #000;
+}
+
+.currency-page-1 .banner-white-box p {
+    padding: 0px 15px 30px 20px;
+    font-size: 15px;
+    line-height: 28px;
+    font-weight: 500;
+    width: 92%;
+}
+
+.gradient-border {
+    display: inline-block;
+    padding: 2px;
+    border-radius: 12px;
+    background: linear-gradient(to right, #7e0db3, #ae00a2, #cf0090, #e7137e, #f73c6e);
+    padding: 0px !important;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.right_btn {
+    font-weight: 600;
+    color: #ffffff;
+    z-index: 4;
+    border-radius: 12px 12px 0 0;
+    position: relative;
+    overflow: hidden;
+    transition: 1s;
+    transform: scale(0.9);
+}
+
+.gradient-text {
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    background-clip: text;
+    color: transparent;
+}
+
+.right_btn:after {
+    content: "";
+    width: 10px;
+    top: -163px;
+    height: 205px;
+    rotate: 38deg;
+    background: #fff;
+    opacity: 0.2;
+    left: 0;
+    position: absolute;
+    animation: drift 2s linear infinite;
+    box-shadow: 0px 0px 26px #fff;
+}
+
+.currency-page-1 img {
+    height: 450px;
+    object-fit: contain;
+}
+
+.banner-down-p {
+    margin-left: 10px;
+}
+
+.crypt-in-box-r {
+    display: flex;
+    justify-content: end;
+}
+
+
+
+.crypto-investment-section {
+    background-color: #f5f8ff;
+}
+
+.stat-box {
+    text-align: center;
+    max-width: 255px;
+    width: 255px;
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
+    position: relative;
+}
+
+.stat-box-1::before {
+    position: absolute;
+    content: "";
+    right: -9px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 35px;
+    width: 1px;
+    background: #888888;
+}
+
+.stat-box-1::after {
+    position: absolute;
+    content: "";
+    right: -10px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 15px;
+    width: 3px;
+    background: linear-gradient(to right, #7e0db3, #cf0090, #f73c6e);
+}
+
+.stat-box img {
+    height: 40px;
+    object-fit: contain;
+}
+
+.stat-box h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    text-align: left;
+    line-height: 28px;
+}
+
+.stat-box p {
+    font-size: 14px;
+    color: #444;
+    margin: 0;
+    text-align: left;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.crypto-investment-section .cards-container .card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    width: 300px;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: 0.5s;
+    transform: scale(0.9);
+}
+
+.crypto-investment-section .cards-container .card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #f5f8ff;
+    position: absolute;
+    top: -20px;
+    left: -11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crypto-investment-section .cards-container .card-icon .inner-circle {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(to right, #7e0db3, #cf0090, #f73c6e);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.crypto-investment-section .cards-container .card-icon .inner-circle img {
+    height: 25px;
+    object-fit: contain;
+}
+
+.crypto-investment-section .cards-container .card-content {
+    margin-top: 30px;
+}
+
+.crypto-investment-section .cards-container .card-content h4 {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #373737;
+}
+
+.crypto-investment-section .cards-container .card-content p {
+    font-size: 14px;
+    color: #000;
+    font-weight: 400;
+    text-align: left;
+    margin: 0;
+}
+
+.crypto-investment-section .cards-container .card:hover {
+    background: linear-gradient(to bottom, #7e0db3, #cf0090, #f73c6e);
+    transform: scale(1);
+    z-index: 9;
+}
+
+.crypto-investment-section .cards-container .card:hover h4 {
+    color: #fff;
+}
+
+.crypto-investment-section .cards-container .card:hover p {
+    color: #fff;
+}
+
+
+
+.currency-page-5 .white-back {
+    background: #fff;
+    width: 100%;
+    box-shadow: 0px 0px 10px #00000026;
+    border-radius: 40px;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    margin: 0 auto;
+    padding: 0;
+}
+
+
+.currency-page-6 .exchange-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0 auto;
+}
+
+.currency-page-6 .card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+    height: max-content !important;
+    border-top: 1px solid #cdcdcd;
+    border-left: 1px solid #cdcdcd;
+}
+
+.currency-page-6 .card .back-box-c {
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.3s ease;
+    height: 290px;
+}
+
+.currency-page-6 .card .back-box-c button {
+    box-shadow: none;
+    border: 0px;
+    background: transparent;
+    font-weight: 600;
+}
+
+.currency-page-6 .card img {
+    width: 50px;
+    margin-bottom: 20px;
+}
+
+.currency-page-6 .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.currency-page-6 .card p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.currency-page-6 .card:hover {
+    border-color: #f73c6e;
+}
+
+.currency-page-6 .card:hover .back-box-c {
+    background: #f73c6e;
+}
+
+.currency-page-6 .card:hover button {
+    color: #fff;
+}
+
+.currency-page-6 .card:hover img {
+    filter: invert(1);
+}
+
+.currency-page-6 .card:hover h3,
+.currency-page-6 .card:hover p,
+.currency-page-6 .card:hover a {
+    color: #fff;
+}
+
+
+
+
+.currency-page-8 .development-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.currency-page-8 .dev-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    height: 340px;
+    display: flex;
+    align-items: flex-end;
+    transition: 3s ease;
+}
+
+.currency-page-8 .dev-overlay {
+    position: absolute;
+    top: 190px;
+    transition: 1s;
+    width: 100%;
+    padding: 24px;
+    color: #fff;
+}
+
+.currency-page-8 .dev-overlay h3 {
+    color: #fff;
+}
+
+.currency-page-8 .dev-content-box img,
+.currency-page-8 .dev-overlay img {
+    width: 50px;
+    margin-bottom: 0;
+    object-fit: contain;
+}
+
+.currency-page-8 .dev-content-box h3,
+.currency-page-8 .dev-overlay h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin: 10px 0px;
+}
+
+.currency-page-8 .white-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    margin: 20px;
+    padding: 24px;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    transition: 0.5s;
+}
+
+.currency-page-8 .dev-content-box p {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.currency-page-8 .dev-card:hover .dev-overlay {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: -100%;
+    transition: 1s;
+}
+
+.currency-page-8 .dev-card:hover .dev-content-box {
+    bottom: 0;
+}
+
+.currency-page-8 .dev-content-box img {
+    filter: invert(1);
+}
+
+.currency-page-14 .tab-tech-oneIn {
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 0px 8px;
+    margin-bottom: 30px;
+    padding: 30px 20px;
+}
+
+.currency-page-9 .new-process .roadmap_box{
+    min-height: 195px;
+}
+
+.currency-page-9 .new-process .roadmap_box p {
+    color: #333;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.bot-trading-tech .tab-tech .nav-tabs li button.active {
+    color: #fff;
+    background: #6a3e90;
+    border: 1px solid #6a3e90;
+}
+
+.bot-trading-tech .tab-tech .nav-tabs li button {
+    background: #fff;
+    border: 1px solid #efefef;
+    color: #222;
+    display: block;
+    font-weight: 600;
+    padding: 10px 0;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    margin: 0 0 0 -1px;
+    border-radius: 10px 20px 10px 20px;
+    width: 100%;
+}
+
+.bot-trading-tech .tab-tech .stage-one-box {
+    border: 1px solid #efefef;
+    border-radius: 0 0 6px 6px;
+    clear: both;
+    padding: 15px 25px;
+    position: relative;
+    top: 0;
+    background: #fff;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.bot-trading-tech .tab-tech .stage-one-box b {
+    box-shadow: 2px 1px 5px #ddd;
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    margin-top: 6px;
+    font-weight: 600;
+    margin: 0 10px 10px 0;
+}
+
+.bot-trading-tech .tab-tech .stage-one-box b img {
+    width: auto;
+    margin: 0 10px 0 0px;
+    height: 30px;
+}
+
+.bot-trading-tech .tab-tech .nav-tabs li {
+    min-width: 200px;
+}
+
+.bot-trading-tech .tab-tech .nav-tabs {
+    justify-content: space-between !important;
+    border: 0px;
+}
+
+
+.cry-box-we-serve {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 20px;
+    /* padding-right: 20px; */
+}
+
+.we-serve-box {
+    background-color: rgba(133, 177, 248, 0.1);
+    border-radius: 5px;
+    margin-top: 30px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.5s;
+    border: 1px solid rgba(133, 177, 248, 0.1);
+}
+
+.we-serve-box span img {
+    /* width: 80px; */
+    height: 45px;
+    margin-bottom: 8px;
+}
+
+.we-serve-box em {
+    font-weight: bold;
+    font-size: 17px;
+    font-style: normal;
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+}
+
+.tab-tech-oneIn {
+    margin: 5px 0px 30px 5px;
+}
+
+@media screen and (max-width: 450px) {
+
+    .crypt-in-box {
+        display: block;
+    }
+
+    .stat-box-1::after,
+    .stat-box-1::before {
+        display: none;
+    }
+
+
+    .currency-page-8 p {
+        width: 100%;
+    }
+
+    .currency-page-13 .crypt-exchange-in.crypt-exchange-next.mt-1 {
+        padding-bottom: 40px;
+    }
+
+
+
+
+
+    .crypto-investment-section .cards-container .card {
+        width: 100%;
+    }
+
+
+    .currency-page-8 .development-grid,
+    .currency-page-6 .exchange-grid {
+        display: flex !important;
+        gap: 15px;
+        flex-direction: column;
+    }
+
+    .currency-page-6 .card .back-box-c {
+        height: auto;
+    }
+
+    .tab-tech-one {
+        padding-top: 20px;
+    }
+
+    .bot-trading-tech .tab-tech .nav-tabs {
+        column-gap: 10px;
+        flex-wrap: nowrap;
+        overflow: scroll;
+        padding-bottom: 10px;
+    }
+
+    .cry-box-we-serve {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .stat-box {
+        gap: 15px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .stat-box p {
+        text-align: center;
+    }
+
+    .stat-box h3 {
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .stats-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 50px;
+        flex-wrap: nowrap;
+    }
+
+    .stat-box img{
+        height: 30px;
+    }
+
+    .gradient-border{
+        display: flex;
+        justify-content: center;
+    }
+}

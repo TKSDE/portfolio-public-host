@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GMB Automation Hub | AI Reviews & Post Scheduler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h2>GMB Pilot</h2>
+          <span class="badge">Isolated Microservice</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-btn active" data-tab="overview">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Overview & Accounts
+        </button>
+        <button class="nav-btn" data-tab="reviews">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          AI Review Auto-Replies
+        </button>
+        <button class="nav-btn" data-tab="posts">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          Scheduled Posts
+        </button>
+        <button class="nav-btn" data-tab="settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          Location Directives
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="service-status">
+          <span class="status-dot online"></span>
+          <span>Isolated Port: 5005</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div>
+          <h1 id="page-title">Overview & Account Status</h1>
+          <p class="subtitle" id="page-subtitle">Manage Google OAuth connection and view automated activities.</p>
+        </div>
+        <div class="topbar-actions">
+          <div id="account-pill" class="account-pill disconnected">
+            <span class="pill-dot"></span>
+            <span id="account-email-display">Not Connected</span>
+          </div>
+          <button id="auth-action-btn" class="btn btn-primary">Connect Google Account</button>
+        </div>
+      </header>
+
+      <!-- Alert Notification Banner -->
+      <div id="alert-banner" class="alert-banner hidden"></div>
+
+      <!-- Tab 1: Overview -->
+      <section id="tab-overview" class="tab-pane active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-title">Connected Locations</div>
+            <div class="stat-value" id="stat-locations-count">0</div>
+            <div class="stat-desc">Active Google Business Profiles</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Total Reviews Tracked</div>
+            <div class="stat-value" id="stat-reviews-count">0</div>
+            <div class="stat-desc">Synced from Google Maps</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">AI Auto-Replies Sent</div>
+            <div class="stat-value" id="stat-replies-count">0</div>
+            <div class="stat-desc">Generated via Gemini AI</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title">Scheduled Posts</div>
+            <div class="stat-value" id="stat-posts-count">0</div>
+            <div class="stat-desc">Waiting in queue</div>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-header">
+            <h3>Connected Locations</h3>
+            <button id="btn-sync-locations" class="btn btn-secondary btn-sm">Refresh Locations</button>
+          </div>
+          <div class="card-body">
+            <div id="locations-list" class="locations-grid">
+              <div class="empty-state">No locations discovered yet. Connect your Google Business Profile account above.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 2: Reviews & AI Auto-Reply -->
+      <section id="tab-reviews" class="tab-pane">
+        <div class="pane-toolbar">
+          <div class="filters">
+            <select id="filter-review-status" class="select-input">
+              <option value="">All Reviews</option>
+              <option value="false">Unreplied Only</option>
+              <option value="true">Replied Only</option>
+            </select>
+            <select id="filter-review-rating" class="select-input">
+              <option value="">All Star Ratings</option>
+              <option value="5">5 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="2">2 Stars</option>
+              <option value="1">1 Star</option>
+            </select>
+          </div>
+          <button id="btn-sync-reviews-now" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            Trigger AI Review Sync Now
+          </button>
+        </div>
+
+        <div class="card mt-3">
+          <div class="card-body">
+            <div id="reviews-feed" class="reviews-feed">
+              <div class="empty-state">Loading reviews...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 3: Post Scheduling -->
+      <section id="tab-posts" class="tab-pane">
+        <div class="grid-2-col">
+          <!-- Scheduling Form -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Create Scheduled Post</h3>
+            </div>
+            <div class="card-body">
+              <form id="form-create-post">
+                <div class="form-group">
+                  <label for="post-location-select">Target Location</label>
+                  <select id="post-location-select" class="form-input" required>
+                    <option value="">Select a location...</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="post-summary">Post Caption / Content</label>
+                  <textarea id="post-summary" class="form-input" rows="4" placeholder="Write your Google update, news, announcement, or promotional offer..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="post-image-url">Image URL (Optional)</label>
+                  <input type="url" id="post-image-url" class="form-input" placeholder="https://example.com/banner.jpg">
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="post-cta-type">Action Button (CTA)</label>
+                    <select id="post-cta-type" class="form-input">
+                      <option value="LEARN_MORE">Learn More</option>
+                      <option value="BOOK">Book</option>
+                      <option value="ORDER">Order Online</option>
+                      <option value="SHOP">Shop</option>
+                      <option value="SIGN_UP">Sign Up</option>
+                      <option value="CALL">Call Now</option>
+                      <option value="ACTION_TYPE_UNSPECIFIED">None</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="post-cta-url">Button URL</label>
+                    <input type="url" id="post-cta-url" class="form-input" placeholder="https://yourwebsite.com/offer">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="post-scheduled-at">Publish Date & Time</label>
+                  <input type="datetime-local" id="post-scheduled-at" class="form-input" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full">Schedule Post</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Scheduled & Published Queue -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Scheduled Posts Queue</h3>
+              <button id="btn-dispatch-posts-now" class="btn btn-secondary btn-sm">Force Dispatch Check</button>
+            </div>
+            <div class="card-body">
+              <div id="posts-queue" class="posts-queue">
+                <div class="empty-state">No scheduled posts found.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 4: Location Directives / Settings -->
+      <section id="tab-settings" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <h3>AI Directives & Rules by Location</h3>
+          </div>
+          <div class="card-body">
+            <div id="locations-settings-container">
+              <div class="empty-state">Connect an account to view and configure location rules.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

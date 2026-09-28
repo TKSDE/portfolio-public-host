@@ -1,0 +1,552 @@
+.block-dev {
+    background: url(../../assets/block-dev-bg-top.webp) no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-top: 80px;
+    background-size: 100%;
+}
+
+.block-dev-in {
+    color: #fff;
+    background: linear-gradient(270deg, hsl(0deg 0% 0% / 0%), rgb(0 0 0 / 93%) 100%);
+    height: calc(100vh - 80px);
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    align-items: center;
+}
+
+.block-dev h1 {
+    font-size: 50px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding: 0px;
+    color: #fff;
+}
+
+.block-dev p {
+    font-size: 17px;
+    line-height: 26px;
+}
+
+.why_hire_our .btn-mid {
+    margin-top: 0px !important;
+}
+
+
+.currency-page-6 .exchange-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 0 auto;
+}
+
+.currency-page-6 .card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: 0.3s ease;
+    height: max-content !important;
+    border-top: 1px solid #cdcdcd;
+    border-left: 1px solid #cdcdcd;
+}
+
+.block-chain-new-one .card .back-box-c {
+    height: 290px;
+    border-radius: 12px;
+    padding: 20px 12px;
+    transition: 0.3s ease;
+}
+
+.currency-page-6 .card img {
+    width: 50px;
+    margin-bottom: 5px;
+}
+
+.currency-page-6 .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 20px;
+}
+
+.currency-page-6 .card p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.currency-page-6 .card:hover {
+    border-color: #f73c6e;
+}
+
+.currency-page-6 .card:hover .back-box-c {
+    background: #f73c6e;
+}
+
+.currency-page-6 .card:hover img {
+    filter: invert(1);
+}
+
+.currency-page-6 .card:hover h3,
+.currency-page-6 .card:hover p,
+.currency-page-6 .card:hover a {
+    color: #fff;
+}
+
+
+.new-ex-change .card {
+    border: 1px solid #cdcdcd;
+    padding: 0px;
+}
+
+.block-chain-new-three .card .back-box-c {
+    border-radius: 12px;
+    transition: 0.3s ease;
+    padding: 15px;
+    height: 160px;
+    /* min-height: 100%; */
+}
+
+.new-ex-change .card h3 {
+    padding: 0;
+    margin: 10px 10px 12px;
+}
+
+.new-ex-change .card p {
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    padding-left: 10px;
+}
+
+
+
+.currency-page-8 {
+    padding: 60px 0px 80px;
+}
+
+.currency-page-8 .crypt-exchange-in {
+    padding-bottom: 30px;
+}
+
+.currency-page-8 .crypt-exchange-in h2 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.currency-page-8 .crypt-exchange-in p {
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.currency-page-8 .development-section {
+    padding: 60px 20px;
+    background: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.currency-page-8 .development-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.currency-page-8 .dev-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    height: 320px;
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    align-items: flex-end;
+    transition: 3s ease;
+}
+
+.currency-page-8 .dev-card:hover .dev-content-box {
+    bottom: 0;
+}
+
+.currency-page-8 .dev-overlay {
+    position: absolute;
+    top: 190px;
+    transition: 1s;
+    width: 100%;
+    padding: 24px;
+    color: #fff;
+}
+
+.currency-page-8 .dev-card:hover .dev-overlay {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: -100%;
+    transition: 1s;
+}
+
+.currency-page-8 .dev-content-box {
+    padding: 24px;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    transition: 0.5s;
+}
+
+.currency-page-8 .white-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    margin: 20px;
+}
+
+.currency-page-8 .dev-content-box img,
+.currency-page-8 .dev-overlay img {
+    width: 50px;
+    margin-bottom: 0;
+    object-fit: contain;
+}
+
+.currency-page-8 .dev-content-box img {
+    filter: invert(1);
+}
+
+.currency-page-8 .dev-content-box h3,
+.currency-page-8 .dev-overlay h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    margin: 10px 0px;
+}
+
+.currency-page-8 .dev-content-box p {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.wallet-page-8 {
+    padding: 60px 0;
+    border-radius: 0 0 50px 50px;
+}
+
+.wallet-page-8 .hvm-feature__icon {
+    background: rgb(171 171 171 / 15%);
+    border: 1px solid rgba(51, 51, 51, 0.48);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .4);
+    position: relative;
+    width: max-content;
+    padding: 10px;
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.wallet-page-8 .hvm-feature__icon img {
+    width: 40px;
+}
+
+.wallet-page-8 .dev-card {
+    border: 1px solid hsla(0, 0%, 0%, 0.34);
+    /* border-right: 1px solid hsla(341, 91%, 58%, .34); */
+    height: 220px;
+}
+
+.wallet-page-8 .dev-overlay {
+    position: absolute;
+    top: 30px;
+    transition: 1s;
+    width: 100%;
+    padding: 24px;
+    color: #fff;
+    text-align: center;
+}
+
+.wallet-page-8 .dev-overlay h3 {
+    color: #000;
+    margin: 30px 0px 0px;
+}
+
+.wallet-page-8 .white-box {
+    background: transparent;
+    border-radius: 16px;
+    margin: 20px;
+    text-align: center;
+    padding: 0px 0px 12px;
+}
+
+.wallet-page-8 .white-box p {
+    font-size: 14px;
+    color: #333;
+    line-height: 26px;
+    font-weight: 600;
+}
+
+.wallet-page-8 .hvm-feature__icon:before {
+    background: linear-gradient(90deg, #2e2e2e -12.22%, #292929 112.22%);
+    border-radius: 3.6px;
+    box-shadow: 28.8000011444px 28.8000011444px 28.8000011444px;
+    content: "";
+    filter: blur(14.4px);
+    opacity: .56;
+    position: absolute;
+}
+
+
+
+.port-card h4 {
+    font-size: 38px;
+    line-height: 45px;
+    color: #000;
+    font-weight: 700;
+    /* text-align: center; */
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.port-card p {
+    text-align: left;
+    font-size: 16px;
+    line-height: 29px;
+}
+
+.port-card .app-card {
+    width: 100%;
+    margin: 10px 0px;
+    overflow: hidden;
+}
+
+
+.port-card .image-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.port-card .image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 2;
+}
+
+.port-card .hover-image {
+    opacity: 0;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.port-card .image-container:hover .hover-image {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.port-card .image-container:hover .default-image {
+    opacity: 0;
+}
+
+.port-card .app-content {
+    padding: 20px;
+    background: #fff;
+    width: 90%;
+    margin-top: -30px;
+    z-index: 9;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    min-height: 100%;
+}
+
+.port-card .app-title {
+    font-size: 35px;
+    font-weight: 700;
+    color: #000;
+    text-align: left;
+    margin: 0px 0px 20px;
+}
+
+.port-card .app-description {
+    font-size: 16px;
+    color: #555;
+    margin: 0px 0 15px;
+    text-align: left;
+    font-weight: normal;
+}
+
+.port-card .text-port {
+    font-size: 50px;
+    line-height: 45px;
+    color: #e9e9e9;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.ourworkhead .col-lg-4 {
+    height: 100%;
+    display: grid;
+    justify-content: end;
+    align-items: center;
+}
+
+.it_serbox {
+    transition: all .5s ease 0s;
+    margin: 0 0 30px;
+    padding: 25px 15px 15px;
+    width: 100%;
+    height: 145px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+    background: #fff;
+}
+
+.it_serbox:hover {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, .5);
+}
+
+.it_serbox img {
+    width: auto;
+}
+
+span.stackhead {
+    color: #313131;
+    font-weight: 500;
+    line-height: 28px;
+    margin-top: 15px;
+    font-size: 16px;
+    display: inline-block;
+    width: 100%;
+}
+
+
+.new-tech-stack-ex img {
+    width: 100%;
+}
+
+
+.block-chain-new-two .card {
+    border: 1px solid #cdcdcd !important;
+    background: 0 0;
+    border-radius: 14px;
+    padding: 20px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    margin-top: 0px;
+    min-height: 200px !important;
+    background: #fff;
+    transition: 0.5s;
+}
+
+.block-chain-new-two .card .back-box-c {
+    border-radius: 12px;
+    transition: 0.3s ease;
+    padding: 10px;
+    height: 170px;
+    /* min-height: 100%; */
+}
+
+.new-ex-change .card p {
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    padding-left: 10px;
+}
+
+
+@media screen and (max-width: 450px) {
+    .btn-mid button {
+        justify-content: center;
+    }
+
+    .block-dev {
+        background-size: cover;
+        /* padding-bottom: 50px; */
+        padding: 10px 0px 50px;
+    }
+
+    .block-dev-in {
+        background-size: cover;
+        height: 100%;
+    }
+
+    .block-dev h1 {
+        font-size: 30px;
+        margin-top: 80px;
+    }
+
+    .ppttjp.whrlpoll-1.port-bnr-cvr {
+        width: 100%;
+    }
+
+    .port-card .app-content {
+        width: 100%;
+    }
+
+    .blocktech-img {
+        width: 90%;
+        overflow-x: auto;
+        border-radius: 5px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .blocktech-img img {
+        /* max-width: inherit !important; */
+        /* height: 330px; */
+        height: 400px;
+        width: auto;
+    }
+
+    .currency-page-8 .development-grid,
+    .currency-page-6 .exchange-grid {
+        display: flex !important;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .ourworkhead .col-lg-4 {
+        justify-content: normal;
+    }
+
+    .port-card h4 {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .port-card p {
+        text-align: center;
+    }
+
+    .currency-page-8 .crypt-exchange-in p {
+        width: 100%;
+    }
+
+
+
+}
