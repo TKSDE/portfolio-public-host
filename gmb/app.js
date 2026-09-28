@@ -134,22 +134,21 @@ async function initAuth() {
     }
   } catch (err) {
     console.error('Error fetching auth status:', err);
+    if (authBtn) {
+      authBtn.onclick = handleConnect;
+    }
   }
 }
 
-async function handleConnect() {
-  try {
-    const res = await gmbFetch('/api/auth/google/url');
-    const data = await res.json();
-    if (data.success && data.url) {
-      window.location.href = data.url;
-    } else {
-      showAlert('Could not generate Google OAuth URL. Please check server credentials.', 'error');
-    }
-  } catch (err) {
-    showAlert(`Error connecting: ${err.message}`, 'error');
+function handleConnect() {
+  const authBtn = document.getElementById('auth-action-btn');
+  if (authBtn) {
+    authBtn.textContent = 'Redirecting to Google...';
   }
+  // Direct navigation to Google OAuth consent
+  window.location.href = `${API_BASE}/api/auth/google/login`;
 }
+window.handleConnect = handleConnect;
 
 async function handleDisconnect() {
   if (!confirm('Are you sure you want to disconnect this Google Business Profile account?')) return;

@@ -8,6 +8,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>
+    function handleConnect() {
+      var btn = document.getElementById('auth-action-btn');
+      if (btn) btn.textContent = 'Redirecting to Google...';
+      var apiBase = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? (window.location.port === '5000' ? '' : 'http://localhost:5000')
+        : 'https://api.tekchand.tech';
+      window.location.href = apiBase + '/api/auth/google/login';
+    }
+  </script>
 </head>
 <body>
   <div class="app-layout">
@@ -66,7 +76,7 @@
             <span class="pill-dot"></span>
             <span id="account-email-display">Not Connected</span>
           </div>
-          <button id="auth-action-btn" class="btn btn-primary">Connect Google Account</button>
+          <button id="auth-action-btn" class="btn btn-primary" onclick="handleConnect()">Connect Google Account</button>
         </div>
       </header>
 
