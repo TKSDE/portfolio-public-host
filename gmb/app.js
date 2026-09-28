@@ -1,3 +1,26 @@
+// Dynamic API Base URL (Local Dev vs Cloudflare Production Domain)
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? (window.location.port === '5000' ? '' : 'http://localhost:5000')
+  : 'https://api.tekchand.tech';
+
+function gmbFetch(endpoint, options) {
+  let url = endpoint;
+  if (endpoint.startsWith('/api/auth/google')) {
+    url = API_BASE + endpoint;
+  } else if (endpoint.startsWith('/api/auth/')) {
+    url = API_BASE + '/api/gmb/auth/' + endpoint.replace('/api/auth/', '');
+  } else if (endpoint.startsWith('/api/locations')) {
+    url = API_BASE + '/api/gmb/locations' + endpoint.replace('/api/locations', '');
+  } else if (endpoint.startsWith('/api/reviews')) {
+    url = API_BASE + '/api/gmb/reviews' + endpoint.replace('/api/reviews', '');
+  } else if (endpoint.startsWith('/api/posts')) {
+    url = API_BASE + '/api/gmb/posts' + endpoint.replace('/api/posts', '');
+  } else {
+    url = API_BASE + endpoint;
+  }
+  return fetch(url, options);
+}
+
 // GMB Automation Microservice Dashboard Logic
 
 let currentAccount = null;
@@ -85,7 +108,7 @@ async function initAuth() {
   const pill = document.getElementById('account-pill');
 
   try {
-    const res = await fetch('/api/auth/status');
+    const res = await gmbFetch('/api/auth/status');
     const data = await res.json();
 
     if (data.connected && data.account) {
@@ -116,7 +139,7 @@ async function initAuth() {
 
 async function handleConnect() {
   try {
-    const res = await fetch('/api/auth/google/url');
+    const res = await gmbFetch('/api/auth/google/url');
     const data = await res.json();
     if (data.success && data.url) {
       window.location.href = data.url;
@@ -132,7 +155,7 @@ async function handleDisconnect() {
   if (!confirm('Are you sure you want to disconnect this Google Business Profile account?')) return;
 
   try {
-    const res = await fetch('/api/auth/disconnect', { method: 'POST' });
+    const res = await gmbFetch('/api/auth/disconnect', { method: 'POST' });
     const data = await res.json();
     if (data.success) {
       showAlert('Account disconnected.', 'success');
@@ -147,7 +170,7 @@ async function handleDisconnect() {
 function initLocations() {
   document.getElementById('btn-sync-locations').addEventListener('click', async () => {
     try {
-      const res = await fetch('/api/locations/sync', { method: 'POST' });
+      const res = await gmbFetch('/api/locations/sync', { method: 'POST' });
       const data = await res.json();
       if (data.success) {
         showAlert(data.message, 'success');
@@ -197,7 +220,7 @@ function initReviews() {
   document.getElementById('btn-sync-reviews-now').addEventListener('click', async () => {
     try {
       showAlert('Initiating live review check & Gemini auto-replies in background...', 'success');
-      const res = await fetch('/api/reviews/sync-now', { method: 'POST' });
+      const res = await gmbFetch('/api/reviews/sync-now', { method: 'POST' });
       const data = await res.json();
       if (data.success) {
         setTimeout(loadReviews, 3000);
@@ -221,7 +244,7 @@ async function loadReviews() {
   if (rating !== '') query += `&starRating=${rating}`;
 
   try {
-    const res = await fetch(`/api/reviews${query}`);
+    const res = await gmbFetch(`/api/reviews${query}`);
     const data = await res.json();
 
     if (!data.success || !data.data || data.data.length === 0) {
@@ -286,7 +309,7 @@ window.generateAiDraft = async function(reviewId) {
   try {
     const input = document.getElementById(`reply-input-${reviewId}`);
     input.value = 'Generating with Gemini AI...';
-    const res = await fetch(`/api/reviews/${reviewId}/generate-ai-reply`, { method: 'POST' });
+    const res = await gmbFetch(`/api/reviews/${reviewId}/generate-ai-reply`, { method: 'POST' });
     const data = await res.json();
     if (data.success && data.data?.reply) {
       input.value = data.data.reply;
@@ -305,7 +328,7 @@ window.postManualReply = async function(reviewId) {
     const comment = input.value.trim();
     if (!comment) return showAlert('Please enter a reply comment first.', 'error');
 
-    const res = await fetch(`/api/reviews/${reviewId}/reply`, {
+    const res = await gmbFetch(`/api/reviews/${reviewId}/reply`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ comment })
@@ -349,7 +372,7 @@ function initPosts() {
     };
 
     try {
-      const res = await fetch('/api/posts', {
+      const res = await gmbFetch('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -371,7 +394,7 @@ function initPosts() {
 
   document.getElementById('btn-dispatch-posts-now').addEventListener('click', async () => {
     try {
-      const res = await fetch('/api/posts/dispatch-now', { method: 'POST' });
+      const res = await gmbFetch('/api/posts/dispatch-now', { method: 'POST' });
       const data = await res.json();
       showAlert('Dispatch cycle started in background.', 'success');
       setTimeout(loadPosts, 2000);
@@ -384,7 +407,7 @@ function initPosts() {
 async function loadPosts() {
   const container = document.getElementById('posts-queue');
   try {
-    const res = await fetch('/api/posts?limit=30');
+    const res = await gmbFetch('/api/posts?limit=30');
     const data = await res.json();
 
     if (!data.success || !data.data || data.data.length === 0) {
@@ -420,7 +443,7 @@ async function loadPosts() {
 
 window.publishPostNow = async function(postId) {
   try {
-    const res = await fetch(`/api/posts/${postId}/publish-now`, { method: 'POST' });
+    const res = await gmbFetch(`/api/posts/${postId}/publish-now`, { method: 'POST' });
     const data = await res.json();
     if (data.success) {
       showAlert('Post published to GMB immediately!', 'success');
@@ -484,7 +507,7 @@ window.saveLocationSettings = async function(event, locationId) {
   const customAiPrompt = document.getElementById(`setting-prompt-${locationId}`).value;
 
   try {
-    const res = await fetch(`/api/locations/${locationId}/settings`, {
+    const res = await gmbFetch(`/api/locations/${locationId}/settings`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ autoReplyEnabled, autoReplyMinimumRating, customAiPrompt })
@@ -504,13 +527,13 @@ window.saveLocationSettings = async function(event, locationId) {
 async function updateOverviewStats() {
   document.getElementById('stat-locations-count').textContent = currentLocations.length;
   try {
-    const revRes = await fetch('/api/reviews?limit=1');
+    const revRes = await gmbFetch('/api/reviews?limit=1');
     const revData = await revRes.json();
     if (revData.success) {
       document.getElementById('stat-reviews-count').textContent = revData.total || 0;
     }
 
-    const postRes = await fetch('/api/posts?status=SCHEDULED&limit=1');
+    const postRes = await gmbFetch('/api/posts?status=SCHEDULED&limit=1');
     const postData = await postRes.json();
     if (postData.success) {
       document.getElementById('stat-posts-count').textContent = postData.total || 0;
