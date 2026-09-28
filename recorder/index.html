@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Interview Recorder (Dual Audio + Screen)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #090d16;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px;
+    }
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: #131d2e;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      border: 1px solid #1e293b;
+    }
+    h1 {
+      font-size: 24px;
+      color: #38bdf8;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    /* Step by step guide box */
+    .guide-box {
+      background: #0f172a;
+      border: 2px solid #38bdf8;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 24px;
+    }
+    .guide-header {
+      font-weight: 700;
+      color: #38bdf8;
+      font-size: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .guide-visual {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+      border: 1px dashed #64748b;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .popup-mockup {
+      background: #27272a;
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid #52525b;
+      position: relative;
+    }
+    .mock-tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid #3f3f46;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .mock-tab {
+      padding: 4px 10px;
+      border-radius: 4px;
+      color: #a1a1aa;
+    }
+    .mock-tab.active {
+      background: #38bdf8;
+      color: #000;
+      font-weight: bold;
+    }
+    .mock-screen {
+      height: 90px;
+      background: #18181b;
+      border: 2px solid #38bdf8;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+    .mock-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px solid #3f3f46;
+    }
+    .highlight-checkbox {
+      background: #f59e0b;
+      color: #000;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      animation: pulse-glow 1.5s infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 10px #f59e0b; }
+      50% { box-shadow: 0 0 20px #f59e0b; }
+    }
+
+    .folder-banner {
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #cbd5e1;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .folder-banner code {
+      background: #1e293b;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #38bdf8;
+      font-family: Consolas, monospace;
+      word-break: break-all;
+    }
+    .btn-folder {
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-folder:hover {
+      background: #2563eb;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    button {
+      flex: 1;
+      min-width: 150px;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    #startBtn {
+      background: #10b981;
+      color: #ffffff;
+    }
+    #startBtn:hover:not(:disabled) {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+    #pauseBtn {
+      background: #f59e0b;
+      color: #000;
+    }
+    #pauseBtn:hover:not(:disabled) {
+      background: #d97706;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    #stopBtn {
+      background: #ef4444;
+      color: #ffffff;
+    }
+    #stopBtn:hover:not(:disabled) {
+      background: #dc2626;
+      transform: translateY(-2px);
+    }
+    #testSoundBtn {
+      flex: 0.7;
+      background: #475569;
+      color: #f8fafc;
+      font-size: 13px;
+    }
+    #testSoundBtn:hover {
+      background: #64748b;
+    }
+    button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+    .status-panel {
+      background: #0a0f1d;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #1e293b;
+      margin-bottom: 24px;
+    }
+    .status-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .timer {
+      font-size: 26px;
+      font-weight: bold;
+      color: #f43f5e;
+      font-family: monospace;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .badge.ready {
+      background: #334155;
+      color: #cbd5e1;
+    }
+    .badge.recording {
+      background: #dc2626;
+      color: #ffffff;
+      animation: pulse 1.5s infinite;
+    }
+    .badge.paused {
+      background: #d97706;
+      color: #ffffff;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+    .meter-container {
+      margin-top: 14px;
+    }
+    .meter-label {
+      font-size: 13px;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .meter-bar {
+      width: 100%;
+      height: 12px;
+      background: #1e293b;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+    .meter-fill-mic {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #eab308);
+      transition: width 0.05s ease;
+    }
+    .meter-fill-sys {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      transition: width 0.05s ease;
+    }
+    .recorded-preview {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      background: #0a0f1d;
+      border-radius: 12px;
+      border: 1px solid #10b981;
+    }
+    video {
+      width: 100%;
+      max-height: 400px;
+      border-radius: 8px;
+      margin-top: 12px;
+      border: 1px solid #475569;
+      background: #000;
+    }
+
+    /* Modal Warning */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      max-width: 550px;
+      width: 100%;
+      background: #1e293b;
+      border-radius: 14px;
+      padding: 26px;
+      border: 2px solid #ef4444;
+      text-align: center;
+    }
+    .modal-card h2 {
+      color: #ef4444;
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .modal-card p {
+      color: #cbd5e1;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* History Section */
+    .history-section {
+      margin-top: 32px;
+      border-top: 1px solid #334155;
+      padding-top: 24px;
+    }
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .history-title {
+      font-size: 18px;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .history-count {
+      background: #334155;
+      color: #94a3b8;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .history-card {
+      background: #0a0f1d;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      transition: border-color 0.2s;
+    }
+    .history-card:hover {
+      border-color: #38bdf8;
+    }
+    .history-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .history-name {
+      font-weight: 600;
+      color: #e2e8f0;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .history-meta {
+      font-size: 12px;
+      color: #94a3b8;
+      display: flex;
+      gap: 14px;
+    }
+    .history-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-action {
+      min-width: auto;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+    }
+    .btn-play {
+      background: #0284c7;
+      color: #fff;
+    }
+    .btn-download {
+      background: #10b981;
+      color: #fff;
+    }
+    .btn-delete {
+      background: #334155;
+      color: #f87171;
+    }
+    .empty-history {
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      padding: 30px;
+      background: #0a0f1d;
+      border-radius: 10px;
+      border: 1px dashed #334155;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🎥 Interview Dual Audio & Screen Recorder</h1>
+  <div class="subtitle">Aapki Voice (Mic) + Interviewer Ki Voice (Teams/System Audio)</div>
+
+  <!-- Permanent Folder Banner -->
+  <div class="folder-banner">
+    <div>
+      📁 <b>Local Hard Drive Path:</b> <code id="folderPathText">Loading...</code>
+    </div>
+    <button class="btn-folder" id="openFolderBtn" type="button">
+      📂 Open Folder in PC
+    </button>
+  </div>
+
+  <!-- VISUAL GUIDE ON HOW TO SHARE SYSTEM AUDIO -->
+  <div class="guide-box">
+    <div class="guide-header">
+      🔍 INTERVIEWER KI AWAZ KE LIYE YE CHECKMARK LAGANA COMPULSORY HAI:
+    </div>
+    <div style="font-size:14px; line-height:1.7; color:#cbd5e1;">
+      Jab aap <b>"Start Recording"</b> dabayenge to Chrome ek popup kholega:
+      <ol style="padding-left:22px; margin-top:6px;">
+        <li>Upar <b>"Entire Screen"</b> (Puri Screen) tab par click karein.</li>
+        <li>Niche diye gaye diagram ki tarah <b>Left Corner</b> me <b>"Also share system audio"</b> switch ko <b>ON</b> karein!</li>
+        <li>Screen thumbnail par click karke <b>"Share"</b> dabayein.</li>
+      </ol>
+    </div>
+
+    <!-- Illustrated Mockup -->
+    <div class="guide-visual">
+      <div style="font-size:12px; color:#94a3b8; font-weight:bold;">👇 Chrome Popup me ye kaisa dikhta hai:</div>
+      <div class="popup-mockup">
+        <div class="mock-tabs">
+          <div class="mock-tab">Chrome Tab</div>
+          <div class="mock-tab">Window (Isme audio nahi hota!)</div>
+          <div class="mock-tab active">👉 Entire Screen (Ispe click karein)</div>
+        </div>
+        <div class="mock-screen">
+          🖥️ Screen 1 (Puri Screen Thumbnail)
+        </div>
+        <div class="mock-footer">
+          <div class="highlight-checkbox">
+            <span>☑️ Also share system audio (YAHAN TIK LAGAYEIN!)</span>
+          </div>
+          <div style="background:#3b82f6; color:#fff; padding:6px 16px; border-radius:4px; font-size:13px; font-weight:bold;">
+            Share
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button id="startBtn" type="button">
+      <span>🔴</span> Start Recording
+    </button>
+    <button id="pauseBtn" type="button" disabled>
+      <span>⏸️</span> Pause
+    </button>
+    <button id="stopBtn" type="button" disabled>
+      <span>⏹️</span> Stop & Save Video
+    </button>
+    <button id="testSoundBtn" type="button">
+      <span>🔔</span> Test Audio Chime
+    </button>
+  </div>
+
+  <div class="status-panel">
+    <div class="status-header">
+      <div id="statusBadge" class="badge ready">⚪ Ready to record</div>
+      <div id="timer" class="timer">00:00:00</div>
+    </div>
+
+    <div class="meter-container">
+      <div class="meter-label">
+        <span>🎤 Aapki Voice (Microphone Level)</span>
+        <span id="micVal">0%</span>
+      </div>
+      <div class="meter-bar">
+        <div id="micFill" class="meter-fill-mic"></div>
+      </div>
+    </div>
+
+    <div class="meter-container">
+      <div class="meter-label">
+        <span>🔊 Interviewer Ki Voice (System / Teams Audio)</span>
+        <span id="sysVal">0%</span>
+      </div>
+      <div class="meter-bar">
+        <div id="sysFill" class="meter-fill-sys"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recorded-preview" id="previewContainer">
+    <h3 style="color:#10b981; margin-bottom: 6px;">✅ Recording Saved Successfully!</h3>
+    <p style="color:#94a3b8; font-size:13px; margin-bottom:12px;">Video hard drive pe save ho chuka hai. Niche playback dekh sakte hain:</p>
+    <video id="playbackVideo" controls></video>
+  </div>
+
+  <!-- Permanent Disk History Section -->
+  <div class="history-section">
+    <div class="history-header">
+      <div class="history-title">
+        📁 Recording History (Hard Drive Pe Saved Files)
+        <span id="historyCount" class="history-count">0</span>
+      </div>
+      <button class="btn-folder" type="button" onclick="loadServerHistory()" style="font-size:12px; padding:6px 12px;">🔄 Refresh List</button>
+    </div>
+    <div id="historyList" class="history-list">
+      <div class="empty-history">Files load ho rahi hain...</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Alert if System Audio Missing -->
+<div class="modal-overlay" id="audioMissingModal">
+  <div class="modal-card">
+    <h2>⚠️ Interviewer Audio Check Nahi Hua!</h2>
+    <p>
+      Chrome ke popup me <b>"Also share system audio"</b> par tik nahi laga tha.<br><br>
+      Agar aap abhi continue karenge to <b>interviewer ki awaz record nahi hogi</b>, sirf aapka microphone record hoga.<br><br>
+      <b>Solution:</b> Niche <b>"Dobara Select Karein"</b> dabayein, popup me Entire Screen chunein aur <b>"Also share system audio"</b> par tik lagayein.
+    </p>
+    <div class="modal-actions">
+      <button id="retryAudioBtn" type="button" style="background:#10b981; color:#fff;">
+        🔄 Dobara Select Karein (Recommended)
+      </button>
+      <button id="continueAnywayBtn" type="button" style="background:#475569; color:#cbd5e1;">
+        Sirf Mic Record Karein
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // API URL resolution: handles direct file opening, port 3000, and server execution
+  const API_BASE = (window.location.protocol === 'file:' || window.location.port === '3000')
+    ? 'http://localhost:5000'
+    : '';
+
+  const folderPathText = document.getElementById('folderPathText');
+  const openFolderBtn = document.getElementById('openFolderBtn');
+  const historyList = document.getElementById('historyList');
+  const historyCount = document.getElementById('historyCount');
+  const previewContainer = document.getElementById('previewContainer');
+  const playbackVideo = document.getElementById('playbackVideo');
+  const testSoundBtn = document.getElementById('testSoundBtn');
+  const audioMissingModal = document.getElementById('audioMissingModal');
+  const retryAudioBtn = document.getElementById('retryAudioBtn');
+  const continueAnywayBtn = document.getElementById('continueAnywayBtn');
+
+  // Play test sound
+  testSoundBtn.addEventListener('click', () => {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.5);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.8);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.8);
+    } catch(e) {
+      console.error(e);
+    }
+  });
+
+  // Open Windows Folder
+  openFolderBtn.addEventListener('click', async () => {
+    try {
+      await fetch(`${API_BASE}/api/open-folder`, { method: 'POST' });
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
+  // Load Real Server Disk History
+  async function loadServerHistory() {
+    try {
+      const res = await fetch(`${API_BASE}/api/recordings`);
+      const data = await res.json();
+      folderPathText.textContent = data.folderPath || 'interview-recorder/recordings';
+      const list = data.recordings || [];
+      historyCount.textContent = list.length;
+
+      if (list.length === 0) {
+        historyList.innerHTML = '<div class="empty-history">Abhi is hard drive folder me koi recording nahi hai.</div>';
+        return;
+      }
+
+      historyList.innerHTML = '';
+      list.forEach(rec => {
+        const card = document.createElement('div');
+        card.className = 'history-card';
+
+        const d = new Date(rec.createdAt);
+        const timeStr = d.toLocaleDateString('hi-IN', {
+          day: '2-digit', month: 'short', year: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+        });
+
+        card.innerHTML = `
+          <div class="history-info">
+            <div class="history-name">📹 ${rec.fileName}</div>
+            <div class="history-meta">
+              <span>🕒 <b>Time:</b> ${timeStr}</span>
+              <span>💾 <b>Size:</b> ${rec.sizeMB} MB</span>
+            </div>
+          </div>
+          <div class="history-actions">
+            <button class="btn-action btn-play" type="button" onclick="playDiskVideo('${rec.fileName}')">▶️ Play</button>
+            <a class="btn-action btn-download" href="${API_BASE}/recordings/${encodeURIComponent(rec.fileName)}" download="${rec.fileName}" style="text-decoration:none;">⬇️ Download</a>
+            <button class="btn-action btn-delete" type="button" onclick="deleteDiskVideo('${rec.fileName}')">🗑️ Delete</button>
+          </div>
+        `;
+        historyList.appendChild(card);
+      });
+    } catch (e) {
+      console.error(e);
+      historyList.innerHTML = '<div class="empty-history" style="color:#ef4444;">Server se history load nahi hui. Make sure server (node server.js) chal raha hai.</div>';
+    }
+  }
+
+  window.playDiskVideo = function(fileName) {
+    playbackVideo.src = `${API_BASE}/recordings/${encodeURIComponent(fileName)}`;
+    playbackVideo.style.display = 'block';
+    previewContainer.style.display = 'block';
+    previewContainer.scrollIntoView({ behavior: 'smooth' });
+    playbackVideo.play().catch(e => console.warn('Autoplay prevented:', e));
+  };
+
+  window.deleteDiskVideo = async function(fileName) {
+    if (!confirm(`Kya aap "${fileName}" ko hard drive se delete karna chahte hain?`)) return;
+    try {
+      await fetch(`${API_BASE}/api/recordings/${encodeURIComponent(fileName)}`, { method: 'DELETE' });
+      loadServerHistory();
+    } catch (e) {
+      alert('Delete failed: ' + e.message);
+    }
+  };
+
+  // Recording Logic
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let screenStream = null;
+  let micStream = null;
+  let audioContext = null;
+  let timerInterval = null;
+  let secondsElapsed = 0;
+  let isPaused = false;
+  let meterAnimIds = [];
+
+  const startBtn = document.getElementById('startBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const statusBadge = document.getElementById('statusBadge');
+  const timerDisplay = document.getElementById('timer');
+  const micFill = document.getElementById('micFill');
+  const sysFill = document.getElementById('sysFill');
+  const micVal = document.getElementById('micVal');
+  const sysVal = document.getElementById('sysVal');
+
+  function updateTimer() {
+    if (isPaused) return;
+    secondsElapsed++;
+    const hrs = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
+    const mins = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
+    const secs = String(secondsElapsed % 60).padStart(2, '0');
+    timerDisplay.textContent = `${hrs}:${mins}:${secs}`;
+  }
+
+  function setupVolumeMeter(stream, fillElem, valElem, ctx) {
+    if (!stream || stream.getAudioTracks().length === 0 || !ctx) return null;
+    try {
+      const source = ctx.createMediaStreamSource(stream);
+      const analyser = ctx.createAnalyser();
+      analyser.fftSize = 256;
+      source.connect(analyser);
+
+      const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+      function checkLevel() {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+          if (!isPaused) {
+            analyser.getByteFrequencyData(dataArray);
+            let sum = 0;
+            for (let i = 0; i < dataArray.length; i++) {
+              sum += dataArray[i];
+            }
+            const avg = sum / dataArray.length;
+            const pct = Math.min(100, Math.round((avg / 128) * 100));
+            fillElem.style.width = pct + '%';
+            valElem.textContent = pct + '%';
+          }
+          const animId = requestAnimationFrame(checkLevel);
+          meterAnimIds.push(animId);
+        } else {
+          fillElem.style.width = '0%';
+          valElem.textContent = '0%';
+        }
+      }
+      checkLevel();
+    } catch (e) {
+      console.warn('Volume meter warning:', e);
+    }
+  }
+
+  function cleanupAudioContext() {
+    meterAnimIds.forEach(id => cancelAnimationFrame(id));
+    meterAnimIds = [];
+    if (audioContext && audioContext.state !== 'closed') {
+      try { audioContext.close(); } catch(e) {}
+      audioContext = null;
+    }
+  }
+
+  async function initiateRecording(allowWithoutSysAudio = false) {
+    try {
+      recordedChunks = [];
+      previewContainer.style.display = 'none';
+
+      // 1. Microphone
+      try {
+        micStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: false,
+            autoGainControl: true
+          }
+        });
+      } catch (e) {
+        console.warn('Microphone error or not allowed:', e);
+        micStream = null;
+      }
+
+      // 2. Screen + System Audio (Safe constraints to prevent OverconstrainedError)
+      screenStream = await navigator.mediaDevices.getDisplayMedia({
+        video: {
+          frameRate: { ideal: 30, max: 60 }
+        },
+        audio: true
+      });
+
+      const hasSystemAudio = screenStream && screenStream.getAudioTracks().length > 0;
+
+      // If user forgot to check the box, intercept and show warning modal
+      if (!hasSystemAudio && !allowWithoutSysAudio) {
+        if (screenStream) screenStream.getTracks().forEach(t => t.stop());
+        if (micStream) micStream.getTracks().forEach(t => t.stop());
+        audioMissingModal.style.display = 'flex';
+        return;
+      }
+
+      if (!hasSystemAudio) {
+        sysVal.textContent = 'Not shared';
+        sysVal.style.color = '#f87171';
+      } else {
+        sysVal.textContent = 'Active (Connected)';
+        sysVal.style.color = '#38bdf8';
+      }
+
+      // Unified AudioContext with clean lifecycle
+      cleanupAudioContext();
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+      const destination = audioContext.createMediaStreamDestination();
+
+      if (micStream && micStream.getAudioTracks().length > 0) {
+        const micSource = audioContext.createMediaStreamSource(micStream);
+        micSource.connect(destination);
+        setupVolumeMeter(micStream, micFill, micVal, audioContext);
+      }
+
+      if (hasSystemAudio) {
+        const screenAudioSource = audioContext.createMediaStreamSource(screenStream);
+        screenAudioSource.connect(destination);
+        setupVolumeMeter(screenStream, sysFill, sysVal, audioContext);
+      }
+
+      const audioTracks = destination.stream.getAudioTracks();
+      const tracks = [
+        ...screenStream.getVideoTracks(),
+        ...audioTracks
+      ];
+
+      const combinedStream = new MediaStream(tracks);
+
+      // Select supported mimeType
+      let mimeType = 'video/webm';
+      const preferredMimes = [
+        'video/webm;codecs=vp9,opus',
+        'video/webm;codecs=vp8,opus',
+        'video/webm;codecs=h264,opus',
+        'video/webm'
+      ];
+      for (const m of preferredMimes) {
+        if (MediaRecorder.isTypeSupported(m)) {
+          mimeType = m;
+          break;
+        }
+      }
+
+      mediaRecorder = new MediaRecorder(combinedStream, {
+        mimeType: mimeType,
+        videoBitsPerSecond: 2500000
+      });
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data && e.data.size > 0) {
+          recordedChunks.push(e.data);
+        }
+      };
+
+      mediaRecorder.onstop = async () => {
+        clearInterval(timerInterval);
+        cleanupAudioContext();
+
+        const blob = new Blob(recordedChunks, { type: mimeType });
+        const now = new Date();
+        const timestamp = now.toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        const fileName = `Interview_${timestamp}.webm`;
+
+        statusBadge.className = 'badge ready';
+        statusBadge.textContent = '💾 Saving to Hard Drive...';
+
+        try {
+          await fetch(`${API_BASE}/api/upload?filename=${encodeURIComponent(fileName)}`, {
+            method: 'POST',
+            body: blob
+          });
+          statusBadge.textContent = '✅ Saved to Hard Drive';
+        } catch (e) {
+          console.error('Failed to save to disk server:', e);
+          statusBadge.textContent = '⚠️ Saved locally in browser';
+        }
+
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => document.body.removeChild(a), 100);
+
+        playbackVideo.src = url;
+        playbackVideo.style.display = 'block';
+        previewContainer.style.display = 'block';
+
+        loadServerHistory();
+
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        pauseBtn.innerHTML = '<span>⏸️</span> Pause';
+        stopBtn.disabled = true;
+        isPaused = false;
+
+        if (screenStream) screenStream.getTracks().forEach(t => t.stop());
+        if (micStream) micStream.getTracks().forEach(t => t.stop());
+      };
+
+      if (screenStream.getVideoTracks().length > 0) {
+        screenStream.getVideoTracks()[0].onended = () => {
+          if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+          }
+        };
+      }
+
+      mediaRecorder.start(1000);
+
+      startBtn.disabled = true;
+      pauseBtn.disabled = false;
+      stopBtn.disabled = false;
+      statusBadge.className = 'badge recording';
+      statusBadge.textContent = '🔴 RECORDING ACTIVE';
+
+      isPaused = false;
+      secondsElapsed = 0;
+      timerDisplay.textContent = '00:00:00';
+      clearInterval(timerInterval);
+      timerInterval = setInterval(updateTimer, 1000);
+
+    } catch (err) {
+      console.error(err);
+      cleanupAudioContext();
+      if (err.name !== 'NotAllowedError') {
+        alert('Recording error: ' + err.message);
+      }
+      startBtn.disabled = false;
+      pauseBtn.disabled = true;
+      stopBtn.disabled = true;
+    }
+  }
+
+  startBtn.addEventListener('click', () => initiateRecording(false));
+
+  retryAudioBtn.addEventListener('click', () => {
+    audioMissingModal.style.display = 'none';
+    initiateRecording(false);
+  });
+
+  continueAnywayBtn.addEventListener('click', () => {
+    audioMissingModal.style.display = 'none';
+    initiateRecording(true);
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    if (!mediaRecorder) return;
+    if (mediaRecorder.state === 'recording') {
+      mediaRecorder.pause();
+      isPaused = true;
+      pauseBtn.innerHTML = '<span>▶️</span> Resume';
+      pauseBtn.style.background = '#10b981';
+      pauseBtn.style.color = '#fff';
+      statusBadge.className = 'badge paused';
+      statusBadge.textContent = '⏸️ RECORDING PAUSED';
+    } else if (mediaRecorder.state === 'paused') {
+      mediaRecorder.resume();
+      isPaused = false;
+      pauseBtn.innerHTML = '<span>⏸️</span> Pause';
+      pauseBtn.style.background = '#f59e0b';
+      pauseBtn.style.color = '#000';
+      statusBadge.className = 'badge recording';
+      statusBadge.textContent = '🔴 RECORDING ACTIVE';
+    }
+  });
+
+  stopBtn.addEventListener('click', () => {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+    }
+  });
+
+  loadServerHistory();
+</script>
+</body>
+</html>

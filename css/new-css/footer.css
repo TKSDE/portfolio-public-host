@@ -2,7 +2,7 @@
 .footer-section {
     background-image: linear-gradient(to left, #06c6ed, #00b3ee, #009eec, #0088e7, #0070db);
     background-size: cover;
-    margin-top: 200px;
+    margin-top: 40px;
 }
 
 /* Text */
@@ -115,13 +115,10 @@
 }
 
 .footer-s-box {
-    margin-top: -200px;
+    margin-top: 0px;
 }
 
-.let_start h3,
-.let_start p {
-    color: #000;
-}
+.let_start h3, .let_start p { color: #fff; }
 
 .f-contact-data {
     display: flex;

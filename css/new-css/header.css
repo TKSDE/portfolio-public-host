@@ -938,8 +938,7 @@
          width: 155px;
          margin: 0 !important;
          left: 14px;
-         position: fixed;
-         top: 20px;
+         position: relative; top: auto;
      }
 
      /* .navbar-expand-lg {
@@ -973,9 +972,7 @@
 
      button.navbar-toggler.collapsed,
      button.navbar-toggler {
-         position: fixed;
-         top: 6px;
-         right: 16px;
+         position: relative; top: auto; right: auto;
          width: max-content;
          padding: 0;
      }
