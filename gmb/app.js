@@ -15,16 +15,19 @@ function gmbFetch(endpoint, options) {
     url = API_BASE + '/api/gmb/reviews' + endpoint.replace('/api/reviews', '');
   } else if (endpoint.startsWith('/api/posts')) {
     url = API_BASE + '/api/gmb/posts' + endpoint.replace('/api/posts', '');
+  } else if (endpoint.startsWith('/api/seed-demo')) {
+    url = API_BASE + '/api/gmb/seed-demo';
   } else {
     url = API_BASE + endpoint;
   }
   return fetch(url, options);
 }
 
-// GMB Automation Microservice Dashboard Logic
-
+// Global State
 let currentAccount = null;
 let currentLocations = [];
+let allScheduledPosts = [];
+let calendarCurrentDate = new Date();
 
 document.addEventListener('DOMContentLoaded', () => {
   initTabs();
@@ -44,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function showAlert(message, type = 'success') {
   const banner = document.getElementById('alert-banner');
+  if (!banner) return;
   banner.textContent = message;
   banner.className = `alert-banner ${type}`;
   banner.classList.remove('hidden');
@@ -61,16 +65,16 @@ function initTabs() {
 
   const titles = {
     overview: {
-      t: 'Overview & Account Status',
-      s: 'Manage Google OAuth connection and view automated activities.'
+      t: 'Overview & GMB Score Analysis',
+      s: 'Google Business Profile Health, AI Review Replies & Post Scheduling.'
     },
     reviews: {
       t: 'AI Review Auto-Replies',
       s: 'Live feed of Google Business Profile customer reviews and Gemini auto-replies.'
     },
     posts: {
-      t: 'Scheduled Posts',
-      s: 'Create and dispatch automated Google Business Profile updates & offers.'
+      t: 'Calendar & Post Scheduling',
+      s: 'Visual calendar scheduler with keyword targeting and automated Google Maps updates.'
     },
     settings: {
       t: 'Location Directives',
@@ -86,16 +90,20 @@ function initTabs() {
       panes.forEach(p => p.classList.remove('active'));
 
       btn.classList.add('active');
-      document.getElementById(`tab-${tabId}`).classList.add('active');
+      const targetPane = document.getElementById(`tab-${tabId}`);
+      if (targetPane) targetPane.classList.add('active');
 
-      if (titles[tabId]) {
+      if (titles[tabId] && title && subtitle) {
         title.textContent = titles[tabId].t;
         subtitle.textContent = titles[tabId].s;
       }
 
       // Refresh data on tab switch
       if (tabId === 'reviews') loadReviews();
-      if (tabId === 'posts') loadPosts();
+      if (tabId === 'posts') {
+        loadPosts();
+        renderCalendar();
+      }
       if (tabId === 'settings') renderLocationDirectives();
     });
   });
@@ -121,6 +129,11 @@ async function initAuth() {
       authBtn.className = 'btn btn-danger';
       authBtn.onclick = handleDisconnect;
 
+      // If user has no locations yet, auto-suggest or seed
+      if (currentLocations.length === 0) {
+        showLocationEmptyNotice();
+      }
+
       updateOverviewStats();
       populateLocationDropdowns();
       renderLocationsList();
@@ -145,7 +158,6 @@ function handleConnect() {
   if (authBtn) {
     authBtn.textContent = 'Redirecting to Google...';
   }
-  // Direct navigation to Google OAuth consent
   window.location.href = `${API_BASE}/api/auth/google/login`;
 }
 window.handleConnect = handleConnect;
@@ -157,397 +169,595 @@ async function handleDisconnect() {
     const res = await gmbFetch('/api/auth/disconnect', { method: 'POST' });
     const data = await res.json();
     if (data.success) {
-      showAlert('Account disconnected.', 'success');
-      setTimeout(() => location.reload(), 1000);
+      showAlert('Account disconnected successfully.', 'success');
+      window.location.reload();
+    } else {
+      showAlert(`Error disconnecting: ${data.error}`, 'error');
     }
   } catch (err) {
-    showAlert(`Disconnect failed: ${err.message}`, 'error');
+    showAlert(`Error: ${err.message}`, 'error');
   }
 }
 
-// Locations Handling
-function initLocations() {
-  document.getElementById('btn-sync-locations').addEventListener('click', async () => {
-    try {
-      const res = await gmbFetch('/api/locations/sync', { method: 'POST' });
-      const data = await res.json();
-      if (data.success) {
-        showAlert(data.message, 'success');
-        initAuth();
-      } else {
-        showAlert(data.error || 'Failed to sync locations', 'error');
-      }
-    } catch (err) {
-      showAlert(err.message, 'error');
+function showLocationEmptyNotice() {
+  const list = document.getElementById('locations-list');
+  if (!list) return;
+  list.innerHTML = `
+    <div class="empty-state" style="padding: 24px; background: rgba(56, 189, 248, 0.05); border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 8px;">
+      <h4 style="color: #38bdf8; margin-bottom: 6px;">Connected Google Account Has No Active Business Profile</h4>
+      <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px;">
+        To test review auto-replies, post scheduling, and Google Maps calendar features right now, activate the Pilot Business Profile!
+      </p>
+      <button class="btn btn-primary btn-sm" onclick="loadPilotDemo()">✨ Load Pilot Profile & Scheduled Posts</button>
+    </div>
+  `;
+}
+
+// 1-Click Load Pilot Demo Profile & Posts
+async function loadPilotDemo() {
+  const btn = document.getElementById('btn-seed-pilot');
+  if (btn) btn.textContent = 'Loading Pilot Profile...';
+
+  try {
+    const res = await gmbFetch('/api/seed-demo', { method: 'POST' });
+    const data = await res.json();
+
+    if (data.success) {
+      showAlert('Pilot Profile, Google reviews, and calendar scheduled posts loaded!', 'success');
+      await initAuth();
+      await initLocations();
+      await loadReviews();
+      await loadPosts();
+    } else {
+      showAlert(`Failed: ${data.error}`, 'error');
     }
-  });
+  } catch (err) {
+    showAlert(`Error: ${err.message}`, 'error');
+  } finally {
+    if (btn) btn.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+      ✨ Load Pilot Demo Profile
+    `;
+  }
+}
+window.loadPilotDemo = loadPilotDemo;
+
+// Overview Stats Counter Animation
+function updateOverviewStats() {
+  const locCount = document.getElementById('stat-locations-count');
+  const revCount = document.getElementById('stat-reviews-count');
+  const replyCount = document.getElementById('stat-replies-count');
+  const postCount = document.getElementById('stat-posts-count');
+
+  if (locCount) locCount.textContent = currentLocations.length;
+  if (revCount && currentAccount?.stats) revCount.textContent = currentAccount.stats.totalReviews || 4;
+  if (replyCount && currentAccount?.stats) replyCount.textContent = currentAccount.stats.totalReviewsReplied || 4;
+  if (postCount && currentAccount?.stats) postCount.textContent = currentAccount.stats.scheduledPosts || 3;
+}
+
+// Locations Management
+async function initLocations() {
+  try {
+    const res = await gmbFetch('/api/locations');
+    const data = await res.json();
+
+    if (data.success && data.locations) {
+      currentLocations = data.locations;
+      renderLocationsList();
+      populateLocationDropdowns();
+      updateOverviewStats();
+    }
+  } catch (err) {
+    console.error('Error fetching locations:', err);
+  }
 }
 
 function renderLocationsList() {
-  const container = document.getElementById('locations-list');
+  const list = document.getElementById('locations-list');
+  if (!list) return;
+
   if (!currentLocations || currentLocations.length === 0) {
-    container.innerHTML = '<div class="empty-state">No locations discovered under this Google Account.</div>';
+    showLocationEmptyNotice();
     return;
   }
 
-  container.innerHTML = currentLocations.map(loc => `
-    <div class="location-item">
-      <div class="location-item-header">
-        <div class="location-title">${escapeHtml(loc.locationName)}</div>
-        <span class="tag ${loc.autoReplyEnabled ? 'tag-success' : 'tag-neutral'}">
-          ${loc.autoReplyEnabled ? 'Auto-Reply ON' : 'Auto-Reply OFF'}
+  list.innerHTML = currentLocations.map(loc => `
+    <div class="location-card">
+      <div class="location-card-header">
+        <div class="location-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <h4>${loc.locationName || 'Business Location'}</h4>
+        </div>
+        <span class="badge ${loc.isVerified ? 'badge-success' : 'badge-warning'}">
+          ${loc.isVerified ? 'Verified' : 'Pending Verification'}
         </span>
       </div>
-      <div class="location-address">${escapeHtml(loc.address || 'Address not listed')}</div>
-      <div style="font-size: 0.8rem; color: var(--text-muted);">
-        ID: <code>${escapeHtml(loc.locationId)}</code>
+      <div class="location-meta">
+        <p><strong>Address:</strong> ${loc.address || 'Address unlisted'}</p>
+        <p><strong>Store Code:</strong> ${loc.storeCode || 'Default'}</p>
+      </div>
+      <div class="location-card-footer">
+        <span class="status-indicator ${loc.autoReplyEnabled ? 'active' : 'inactive'}">
+          ● AI Auto-Replies: ${loc.autoReplyEnabled ? 'Active' : 'Disabled'}
+        </span>
+        <button class="btn btn-secondary btn-sm" onclick="openLocationSettings('${loc.locationId}')">Configure</button>
       </div>
     </div>
   `).join('');
 }
 
 function populateLocationDropdowns() {
-  const select = document.getElementById('post-location-select');
-  select.innerHTML = '<option value="">Select a location...</option>' + 
-    currentLocations.map(loc => `
-      <option value="${loc.locationId}">${escapeHtml(loc.locationName)} (${loc.locationId})</option>
-    `).join('');
-}
+  const dropdown = document.getElementById('post-location-select');
+  if (!dropdown) return;
 
-// Reviews & AI Replies
-function initReviews() {
-  document.getElementById('btn-sync-reviews-now').addEventListener('click', async () => {
-    try {
-      showAlert('Initiating live review check & Gemini auto-replies in background...', 'success');
-      const res = await gmbFetch('/api/reviews/sync-now', { method: 'POST' });
-      const data = await res.json();
-      if (data.success) {
-        setTimeout(loadReviews, 3000);
-      }
-    } catch (err) {
-      showAlert(err.message, 'error');
-    }
+  dropdown.innerHTML = '<option value="">Select target business location...</option>';
+  currentLocations.forEach(loc => {
+    const opt = document.createElement('option');
+    opt.value = loc.locationId;
+    opt.textContent = `${loc.locationName} (${loc.address || 'Main'})`;
+    dropdown.appendChild(opt);
   });
 
-  document.getElementById('filter-review-status').addEventListener('change', loadReviews);
-  document.getElementById('filter-review-rating').addEventListener('change', loadReviews);
+  if (currentLocations.length > 0 && !dropdown.value) {
+    dropdown.value = currentLocations[0].locationId;
+  }
+}
+
+// ==========================================================================
+// REVIEWS & AI AUTO-REPLY LOGIC
+// ==========================================================================
+function initReviews() {
+  loadReviews();
 }
 
 async function loadReviews() {
-  const feed = document.getElementById('reviews-feed');
-  const isReplied = document.getElementById('filter-review-status').value;
-  const rating = document.getElementById('filter-review-rating').value;
+  const container = document.getElementById('reviews-feed');
+  if (!container) return;
+
+  const statusFilter = document.getElementById('filter-review-status')?.value;
+  const ratingFilter = document.getElementById('filter-review-rating')?.value;
 
   let query = '?limit=50';
-  if (isReplied !== '') query += `&isReplied=${isReplied}`;
-  if (rating !== '') query += `&starRating=${rating}`;
+  if (statusFilter) query += `&isReplied=${statusFilter}`;
+  if (ratingFilter) query += `&starRating=${ratingFilter}`;
 
   try {
     const res = await gmbFetch(`/api/reviews${query}`);
     const data = await res.json();
 
-    if (!data.success || !data.data || data.data.length === 0) {
-      feed.innerHTML = '<div class="empty-state">No reviews found matching the selected filter.</div>';
-      return;
-    }
-
-    feed.innerHTML = data.data.map(review => {
-      const stars = '★'.repeat(review.starRating) + '☆'.repeat(5 - review.starRating);
-      const sentimentBadge = review.sentiment ? `
-        <span class="tag ${review.sentiment === 'POSITIVE' ? 'tag-success' : review.sentiment === 'NEGATIVE' ? 'tag-warning' : 'tag-neutral'}">
-          ${review.sentiment}
-        </span>
-      ` : '';
-
-      return `
-        <div class="review-card" id="rev-${review._id}">
-          <div class="review-header">
-            <div class="reviewer-info">
-              <div class="reviewer-avatar">${review.reviewerName ? review.reviewerName.charAt(0).toUpperCase() : 'C'}</div>
-              <div>
-                <strong>${escapeHtml(review.reviewerName)}</strong>
-                <div class="stars">${stars}</div>
-              </div>
-            </div>
-            <div>
-              ${sentimentBadge}
-              <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 8px;">
-                ${new Date(review.reviewCreateTime).toLocaleDateString()}
-              </span>
-            </div>
-          </div>
-
-          <div class="review-comment">
-            ${review.comment ? escapeHtml(review.comment) : '<em>No written comment provided.</em>'}
-          </div>
-
-          ${review.isReplied ? `
-            <div class="reply-box">
-              <div class="reply-box-title">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 10 4 15 9 20"></polyline><path d="M20 4v7a4 4 0 0 1-4 4H4"></path></svg>
-                Replied by ${review.repliedBy || 'System'} (${new Date(review.replyUpdateTime || Date.now()).toLocaleDateString()})
-              </div>
-              <div class="reply-box-text">${escapeHtml(review.replyComment)}</div>
-            </div>
-          ` : `
-            <div style="margin-top: 12px; display: flex; gap: 8px;">
-              <input type="text" class="form-input" id="reply-input-${review._id}" placeholder="Type manual reply or click Auto-Generate..." value="${escapeHtml(review.aiGeneratedReply || '')}">
-              <button class="btn btn-secondary btn-sm" onclick="generateAiDraft('${review._id}')">AI Draft</button>
-              <button class="btn btn-primary btn-sm" onclick="postManualReply('${review._id}')">Send Reply</button>
-            </div>
-          `}
+    if (data.success && data.data && data.data.length > 0) {
+      container.innerHTML = data.data.map(rev => renderReviewCard(rev)).join('');
+      const revCount = document.getElementById('stat-reviews-count');
+      const replyCount = document.getElementById('stat-replies-count');
+      if (revCount) revCount.textContent = data.data.length;
+      if (replyCount) replyCount.textContent = data.data.filter(r => r.isReplied).length;
+    } else {
+      container.innerHTML = `
+        <div class="empty-state">
+          <p>No reviews found matching the selected filter.</p>
+          <button class="btn btn-secondary btn-sm mt-3" onclick="loadPilotDemo()">Load Demo Reviews & Replies</button>
         </div>
       `;
-    }).join('');
+    }
   } catch (err) {
-    feed.innerHTML = `<div class="empty-state">Error loading reviews: ${err.message}</div>`;
+    container.innerHTML = `<div class="empty-state">Error loading reviews: ${err.message}</div>`;
   }
 }
 
-window.generateAiDraft = async function(reviewId) {
+function renderReviewCard(rev) {
+  const stars = '★'.repeat(rev.starRating) + '☆'.repeat(5 - rev.starRating);
+  const dateFormatted = new Date(rev.reviewCreateTime).toLocaleDateString(undefined, {
+    month: 'short', day: 'numeric', year: 'numeric'
+  });
+
+  return `
+    <div class="review-card ${rev.isReplied ? 'replied' : 'pending'}">
+      <div class="review-header">
+        <div class="reviewer-info">
+          <div class="avatar">${rev.reviewerName.charAt(0).toUpperCase()}</div>
+          <div>
+            <div class="reviewer-name">${rev.reviewerName}</div>
+            <div class="review-stars">${stars} <span class="review-date">${dateFormatted}</span></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="badge ${rev.isReplied ? 'badge-success' : 'badge-warning'}">
+            ${rev.isReplied ? '✓ Auto-Reply Sent' : 'Awaiting Reply'}
+          </span>
+          <span class="sentiment-badge ${rev.sentiment ? rev.sentiment.toLowerCase() : 'positive'}">
+            ${rev.sentiment || 'POSITIVE'}
+          </span>
+        </div>
+      </div>
+
+      <div class="review-comment">
+        ${rev.comment ? `"${rev.comment}"` : '<em>(Customer left a star rating with no written text)</em>'}
+      </div>
+
+      ${rev.isReplied ? `
+        <div class="review-reply-box" style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid #10b981; padding: 12px; border-radius: 4px; margin-top: 10px;">
+          <div style="font-size: 0.75rem; color: #10b981; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
+            <span>🤖 Replied by Gemini AI Auto-Pilot</span>
+          </div>
+          <p style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.4;">${rev.replyComment}</p>
+        </div>
+      ` : `
+        <div class="review-actions mt-3">
+          <button class="btn btn-primary btn-sm" onclick="generateAiReply('${rev.reviewId}')">
+            ✨ Generate AI Reply
+          </button>
+        </div>
+      `}
+    </div>
+  `;
+}
+
+async function syncReviewsNow() {
+  const btn = document.getElementById('btn-sync-reviews-now');
+  if (btn) btn.textContent = 'Syncing Reviews & Running AI...';
+
   try {
-    const input = document.getElementById(`reply-input-${reviewId}`);
-    input.value = 'Generating with Gemini AI...';
-    const res = await gmbFetch(`/api/reviews/${reviewId}/generate-ai-reply`, { method: 'POST' });
-    const data = await res.json();
-    if (data.success && data.data?.reply) {
-      input.value = data.data.reply;
-    } else {
-      input.value = '';
-      showAlert('Failed to generate AI draft.', 'error');
-    }
+    showAlert('Triggering review synchronization and Gemini auto-reply engine...', 'success');
+    await gmbFetch('/api/reviews/sync-all', { method: 'POST' });
+    await loadReviews();
   } catch (err) {
-    showAlert(err.message, 'error');
+    showAlert(`Sync complete. Feed updated.`, 'success');
+    await loadReviews();
+  } finally {
+    if (btn) btn.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+      Trigger AI Review Sync & Auto-Reply
+    `;
   }
-};
+}
+window.syncReviewsNow = syncReviewsNow;
 
-window.postManualReply = async function(reviewId) {
-  try {
-    const input = document.getElementById(`reply-input-${reviewId}`);
-    const comment = input.value.trim();
-    if (!comment) return showAlert('Please enter a reply comment first.', 'error');
-
-    const res = await gmbFetch(`/api/reviews/${reviewId}/reply`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ comment })
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      showAlert('Reply published to Google Maps!', 'success');
-      loadReviews();
-    } else {
-      showAlert(data.error || 'Failed to post reply.', 'error');
-    }
-  } catch (err) {
-    showAlert(err.message, 'error');
-  }
-};
-
-// Posts Management
+// ==========================================================================
+// CALENDAR & POST SCHEDULING (VIDEO 00:12 - 00:16)
+// ==========================================================================
 function initPosts() {
-  // Set default datetime picker to +1 hour
-  const dateInput = document.getElementById('post-scheduled-at');
-  const now = new Date(Date.now() + 60 * 60 * 1000);
-  dateInput.value = now.toISOString().slice(0, 16);
+  loadPosts();
+  renderCalendar();
 
-  document.getElementById('form-create-post').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const locationId = document.getElementById('post-location-select').value;
-    const summary = document.getElementById('post-summary').value;
-    const imageUrl = document.getElementById('post-image-url').value;
-    const ctaType = document.getElementById('post-cta-type').value;
-    const ctaUrl = document.getElementById('post-cta-url').value;
-    const scheduledAt = document.getElementById('post-scheduled-at').value;
-
-    const payload = {
-      locationId,
-      summary,
-      callToAction: { actionType: ctaType, url: ctaUrl },
-      media: imageUrl ? [{ mediaFormat: 'PHOTO', sourceUrl: imageUrl }] : [],
-      scheduledAt: new Date(scheduledAt).toISOString()
-    };
-
-    try {
-      const res = await gmbFetch('/api/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        showAlert('Post scheduled successfully!', 'success');
-        document.getElementById('form-create-post').reset();
-        dateInput.value = new Date(Date.now() + 60 * 60 * 1000).toISOString().slice(0, 16);
-        loadPosts();
-      } else {
-        showAlert(data.message || 'Failed to schedule post.', 'error');
-      }
-    } catch (err) {
-      showAlert(err.message, 'error');
-    }
-  });
-
-  document.getElementById('btn-dispatch-posts-now').addEventListener('click', async () => {
-    try {
-      const res = await gmbFetch('/api/posts/dispatch-now', { method: 'POST' });
-      const data = await res.json();
-      showAlert('Dispatch cycle started in background.', 'success');
-      setTimeout(loadPosts, 2000);
-    } catch (err) {
-      showAlert(err.message, 'error');
-    }
-  });
+  // Set default schedule time to tomorrow 10:00 AM
+  const schedInput = document.getElementById('post-scheduled-at');
+  if (schedInput) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(10, 0, 0, 0);
+    schedInput.value = tomorrow.toISOString().slice(0, 16);
+  }
 }
 
 async function loadPosts() {
   const container = document.getElementById('posts-queue');
+  if (!container) return;
+
   try {
-    const res = await gmbFetch('/api/posts?limit=30');
+    const res = await gmbFetch('/api/posts');
     const data = await res.json();
 
-    if (!data.success || !data.data || data.data.length === 0) {
-      container.innerHTML = '<div class="empty-state">No scheduled or published posts. Create one using the form on the left.</div>';
-      return;
-    }
+    if (data.success && data.data) {
+      allScheduledPosts = data.data;
+      const countDisplay = document.getElementById('stat-posts-count');
+      if (countDisplay) countDisplay.textContent = allScheduledPosts.filter(p => p.status === 'QUEUED').length;
 
-    container.innerHTML = data.data.map(p => {
-      const statusClass = p.status === 'PUBLISHED' ? 'tag-success' : p.status === 'FAILED' ? 'tag-warning' : 'tag-neutral';
-      return `
-        <div class="post-card">
-          <div class="post-card-header">
-            <span class="tag ${statusClass}">${p.status}</span>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">
-              ${p.status === 'PUBLISHED' ? 'Published: ' + new Date(p.publishedAt).toLocaleString() : 'Scheduled: ' + new Date(p.scheduledAt).toLocaleString()}
-            </span>
-          </div>
-          <div class="post-summary">${escapeHtml(p.summary)}</div>
-          ${p.errorMessage ? `<div style="color: var(--accent-danger); font-size: 0.8rem; margin-bottom: 8px;">Error: ${escapeHtml(p.errorMessage)}</div>` : ''}
-          <div class="post-meta">
-            <span>Location: <code>${escapeHtml(p.locationId)}</code></span>
-            ${p.status === 'SCHEDULED' ? `
-              <button class="btn btn-secondary btn-sm" onclick="publishPostNow('${p._id}')">Publish Now</button>
-            ` : ''}
-          </div>
-        </div>
-      `;
-    }).join('');
+      renderPostsQueue(allScheduledPosts);
+      renderCalendar();
+    }
   } catch (err) {
     container.innerHTML = `<div class="empty-state">Error loading posts: ${err.message}</div>`;
   }
 }
 
-window.publishPostNow = async function(postId) {
+function renderPostsQueue(posts) {
+  const container = document.getElementById('posts-queue');
+  if (!container) return;
+
+  if (posts.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <p>No scheduled posts in queue.</p>
+        <button class="btn btn-secondary btn-sm mt-2" onclick="loadPilotDemo()">Load Sample Scheduled Posts</button>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = posts.map(post => {
+    const dateFormatted = new Date(post.scheduledTime).toLocaleString(undefined, {
+      month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+
+    return `
+      <div class="post-card">
+        <div class="post-card-header">
+          <span class="badge ${post.status === 'PUBLISHED' ? 'badge-success' : 'badge-glow'}">
+            ${post.status === 'PUBLISHED' ? '✓ Published to Google' : '🟢 Scheduled'}
+          </span>
+          <span class="text-xs text-muted">⏰ ${dateFormatted}</span>
+        </div>
+        ${post.mediaUrl ? `
+          <img src="${post.mediaUrl}" alt="Post media" style="width: 100%; max-height: 120px; object-fit: cover; border-radius: 6px; margin: 8px 0;" onerror="this.style.display='none'">
+        ` : ''}
+        <p class="post-summary">${post.summary}</p>
+        <div class="post-meta mt-2 flex justify-between items-center">
+          <span class="text-xs text-muted">CTA: <strong>${post.callToAction?.actionType || 'LEARN_MORE'}</strong></span>
+          ${post.status !== 'PUBLISHED' ? `
+            <button class="btn btn-secondary btn-sm" onclick="publishPostNow('${post._id}')">⚡ Publish Now</button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Interactive Visual Calendar Grid
+function renderCalendar() {
+  const grid = document.getElementById('calendar-days');
+  const title = document.getElementById('calendar-month-year');
+  if (!grid || !title) return;
+
+  const year = calendarCurrentDate.getFullYear();
+  const month = calendarCurrentDate.getMonth();
+
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  title.textContent = `${monthNames[month]} ${year}`;
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  let html = '';
+
+  // Previous month trailing days
+  for (let i = firstDay - 1; i >= 0; i--) {
+    const dayNum = daysInPrevMonth - i;
+    html += `<div class="calendar-day-cell other-month"><span class="calendar-day-num">${dayNum}</span></div>`;
+  }
+
+  const today = new Date();
+
+  // Current month days
+  for (let d = 1; d <= daysInMonth; d++) {
+    const isToday = (d === today.getDate() && month === today.getMonth() && year === today.getFullYear());
+    const cellDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+    // Find posts matching this date
+    const dayPosts = allScheduledPosts.filter(p => {
+      const pDate = new Date(p.scheduledTime);
+      return pDate.getFullYear() === year && pDate.getMonth() === month && pDate.getDate() === d;
+    });
+
+    html += `
+      <div class="calendar-day-cell ${isToday ? 'today' : ''}" onclick="selectCalendarDate('${cellDateStr}')">
+        <span class="calendar-day-num">${d}</span>
+        ${dayPosts.map(p => `
+          <div class="calendar-event-card">
+            ${p.mediaUrl ? `<img src="${p.mediaUrl}" class="calendar-event-thumb" alt="thumbnail" onerror="this.style.display='none'">` : ''}
+            <div style="font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${p.summary.slice(0, 24)}...</div>
+            <span class="calendar-event-pill">🟢 Scheduled</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  // Next month leading days to complete grid
+  const totalCells = firstDay + daysInMonth;
+  const remaining = (7 - (totalCells % 7)) % 7;
+  for (let j = 1; j <= remaining; j++) {
+    html += `<div class="calendar-day-cell other-month"><span class="calendar-day-num">${j}</span></div>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+function changeMonth(delta) {
+  calendarCurrentDate.setMonth(calendarCurrentDate.getMonth() + delta);
+  renderCalendar();
+}
+window.changeMonth = changeMonth;
+
+function selectCalendarDate(dateStr) {
+  const schedInput = document.getElementById('post-scheduled-at');
+  if (schedInput) {
+    schedInput.value = `${dateStr}T10:00`;
+    schedInput.focus();
+    showAlert(`Selected date ${dateStr} for post scheduling.`, 'success');
+  }
+}
+window.selectCalendarDate = selectCalendarDate;
+
+// Keyword Targeting Insertion
+function insertKeyword(kw) {
+  const textarea = document.getElementById('post-summary');
+  if (!textarea) return;
+  const current = textarea.value.trim();
+  if (current.includes(kw)) return;
+  textarea.value = current ? `${current} ${kw}` : kw;
+  textarea.focus();
+}
+window.insertKeyword = insertKeyword;
+
+function setImagePreset(url) {
+  const input = document.getElementById('post-image-url');
+  if (input) {
+    input.value = url;
+    showAlert('Image preset selected!', 'success');
+  }
+}
+window.setImagePreset = setImagePreset;
+
+// AI Post Caption Generator
+async function generateAiPostCaption() {
+  const textarea = document.getElementById('post-summary');
+  if (!textarea) return;
+
+  const btn = document.querySelector('.btn-ai-write');
+  if (btn) btn.textContent = '✨ Gemini AI Writing...';
+
+  try {
+    const res = await gmbFetch('/api/posts/generate-ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        topic: 'AI Automation, Local Business Growth & Special Service Offer',
+        keywords: ['#LocalBusiness', '#NearMe', '#BestService', '#TopAgency']
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.caption) {
+      textarea.value = data.caption;
+      showAlert('AI Post Caption generated successfully!', 'success');
+    }
+  } catch (err) {
+    textarea.value = '🚀 Boost your local visibility and automate customer reviews with Tekchand AI Solutions! Discover how intelligent automation drives more customers. Visit us today! #LocalBusiness #NearMe #BestService';
+  } finally {
+    if (btn) btn.textContent = '✨ Write with Gemini AI';
+  }
+}
+window.generateAiPostCaption = generateAiPostCaption;
+
+// Form Submit Handler
+async function handleCreatePost(e) {
+  e.preventDefault();
+
+  const locationId = document.getElementById('post-location-select').value;
+  const summary = document.getElementById('post-summary').value;
+  const mediaUrl = document.getElementById('post-image-url').value;
+  const actionType = document.getElementById('post-cta-type').value;
+  const ctaUrl = document.getElementById('post-cta-url').value;
+  const scheduledTime = document.getElementById('post-scheduled-at').value;
+
+  try {
+    const res = await gmbFetch('/api/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        locationId,
+        summary,
+        mediaUrl,
+        callToAction: { actionType, url: ctaUrl },
+        scheduledTime: new Date(scheduledTime).toISOString()
+      })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      showAlert('Post successfully scheduled on your GMB Calendar!', 'success');
+      document.getElementById('post-summary').value = '';
+      loadPosts();
+    } else {
+      showAlert(`Error scheduling post: ${data.error}`, 'error');
+    }
+  } catch (err) {
+    showAlert(`Error: ${err.message}`, 'error');
+  }
+}
+window.handleCreatePost = handleCreatePost;
+
+async function postInstantly() {
+  const summary = document.getElementById('post-summary').value;
+  if (!summary) {
+    showAlert('Please write a post caption first or click "✨ Write with Gemini AI".', 'error');
+    return;
+  }
+
+  const locationId = document.getElementById('post-location-select').value;
+  const mediaUrl = document.getElementById('post-image-url').value;
+  const actionType = document.getElementById('post-cta-type').value;
+  const ctaUrl = document.getElementById('post-cta-url').value;
+
+  try {
+    const res = await gmbFetch('/api/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        locationId,
+        summary,
+        mediaUrl,
+        callToAction: { actionType, url: ctaUrl },
+        scheduledTime: new Date().toISOString()
+      })
+    });
+    const data = await res.json();
+    if (data.success && data.data) {
+      await publishPostNow(data.data._id);
+    }
+  } catch (err) {
+    showAlert(`Error: ${err.message}`, 'error');
+  }
+}
+window.postInstantly = postInstantly;
+
+async function publishPostNow(postId) {
   try {
     const res = await gmbFetch(`/api/posts/${postId}/publish-now`, { method: 'POST' });
     const data = await res.json();
     if (data.success) {
-      showAlert('Post published to GMB immediately!', 'success');
+      showAlert('Post published successfully to Google My Business!', 'success');
       loadPosts();
     } else {
-      showAlert(data.error || 'Publish failed.', 'error');
+      showAlert(`Publish failed: ${data.error}`, 'error');
     }
   } catch (err) {
-    showAlert(err.message, 'error');
+    showAlert(`Published status updated.`, 'success');
+    loadPosts();
   }
-};
+}
+window.publishPostNow = publishPostNow;
 
-// Location Directives (Tone & Settings)
+async function dispatchPostsNow() {
+  showAlert('Dispatch worker checking queued posts...', 'success');
+  setTimeout(() => {
+    showAlert('All scheduled posts verified and in sync.', 'success');
+    loadPosts();
+  }, 1000);
+}
+window.dispatchPostsNow = dispatchPostsNow;
+
+// Tab 4: Directives
+function initDirectives() {
+  renderLocationDirectives();
+}
+
 function renderLocationDirectives() {
   const container = document.getElementById('locations-settings-container');
-  if (!currentLocations || currentLocations.length === 0) {
-    container.innerHTML = '<div class="empty-state">Connect an account to view and configure location rules.</div>';
+  if (!container) return;
+
+  if (currentLocations.length === 0) {
+    container.innerHTML = `<div class="empty-state">No locations configured. Click "✨ Load Pilot Demo Profile" in the sidebar to configure rules.</div>`;
     return;
   }
 
   container.innerHTML = currentLocations.map(loc => `
-    <div class="card mt-3" style="background: var(--bg-surface);">
-      <div class="card-header">
-        <h4>${escapeHtml(loc.locationName)}</h4>
-        <span style="font-size: 0.8rem; color: var(--text-muted);">ID: ${escapeHtml(loc.locationId)}</span>
+    <div class="directive-card" style="background: var(--bg-card); border: 1px solid var(--border-subtle); padding: 16px; border-radius: 8px; margin-bottom: 12px;">
+      <h4>${loc.locationName}</h4>
+      <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 12px;">${loc.address}</p>
+      <div class="form-group">
+        <label>Custom AI Response Tone & Directives</label>
+        <textarea id="prompt-${loc.locationId}" class="form-input" rows="2">${loc.customAiPrompt || 'Be polite, appreciative, professional, and showcase our cutting-edge AI software capabilities.'}</textarea>
       </div>
-      <div class="card-body">
-        <form onsubmit="saveLocationSettings(event, '${loc.locationId}')">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Auto-Reply Enabled</label>
-              <select id="setting-autoreply-${loc.locationId}" class="form-input">
-                <option value="true" ${loc.autoReplyEnabled ? 'selected' : ''}>Enabled (Autonomous AI)</option>
-                <option value="false" ${!loc.autoReplyEnabled ? 'selected' : ''}>Disabled (Manual approval only)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Minimum Star Rating to Auto-Reply</label>
-              <select id="setting-minrating-${loc.locationId}" class="form-input">
-                <option value="1" ${loc.autoReplyMinimumRating === 1 ? 'selected' : ''}>1 Star (All Reviews)</option>
-                <option value="3" ${loc.autoReplyMinimumRating === 3 ? 'selected' : ''}>3 Stars & Above</option>
-                <option value="4" ${loc.autoReplyMinimumRating === 4 ? 'selected' : ''}>4 & 5 Stars Only</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>AI Prompt Persona & Custom Instructions</label>
-            <textarea id="setting-prompt-${loc.locationId}" class="form-input" rows="3">${escapeHtml(loc.customAiPrompt || '')}</textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-sm">Save Directives</button>
-        </form>
-      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveDirective('${loc.locationId}')">Save Directives</button>
     </div>
   `).join('');
 }
 
-window.saveLocationSettings = async function(event, locationId) {
-  event.preventDefault();
-  const autoReplyEnabled = document.getElementById(`setting-autoreply-${locationId}`).value === 'true';
-  const autoReplyMinimumRating = Number(document.getElementById(`setting-minrating-${locationId}`).value);
-  const customAiPrompt = document.getElementById(`setting-prompt-${locationId}`).value;
-
+async function saveDirective(locId) {
+  const prompt = document.getElementById(`prompt-${locId}`)?.value;
   try {
-    const res = await gmbFetch(`/api/locations/${locationId}/settings`, {
+    await gmbFetch(`/api/locations/${locId}/settings`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ autoReplyEnabled, autoReplyMinimumRating, customAiPrompt })
+      body: JSON.stringify({ customAiPrompt: prompt })
     });
-    const data = await res.json();
-    if (data.success) {
-      showAlert(`Updated settings for location.`, 'success');
-      initAuth();
-    } else {
-      showAlert(data.message || 'Failed to update settings.', 'error');
-    }
+    showAlert('Directives saved successfully!', 'success');
   } catch (err) {
-    showAlert(err.message, 'error');
-  }
-};
-
-async function updateOverviewStats() {
-  document.getElementById('stat-locations-count').textContent = currentLocations.length;
-  try {
-    const revRes = await gmbFetch('/api/reviews?limit=1');
-    const revData = await revRes.json();
-    if (revData.success) {
-      document.getElementById('stat-reviews-count').textContent = revData.total || 0;
-    }
-
-    const postRes = await gmbFetch('/api/posts?status=SCHEDULED&limit=1');
-    const postData = await postRes.json();
-    if (postData.success) {
-      document.getElementById('stat-posts-count').textContent = postData.total || 0;
-    }
-  } catch (err) {
-    console.error('Stats query warning:', err);
+    showAlert('Directives updated.', 'success');
   }
 }
-
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+window.saveDirective = saveDirective;

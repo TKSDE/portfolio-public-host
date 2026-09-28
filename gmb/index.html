@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GMB Automation Hub | AI Reviews & Post Scheduler</title>
+  <title>GMB Pilot | AI Automation, Review Auto-Reply & Post Scheduling</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>
     function handleConnect() {
@@ -32,22 +32,22 @@
         </div>
         <div class="brand-text">
           <h2>GMB Pilot</h2>
-          <span class="badge">Isolated Microservice</span>
+          <span class="badge">AI Automation Engine</span>
         </div>
       </div>
 
-      <nav class="nav-links">
+      <nav class="sidebar-nav">
         <button class="nav-btn active" data-tab="overview">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-          Overview & Accounts
+          Overview & Score
         </button>
         <button class="nav-btn" data-tab="reviews">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          AI Review Auto-Replies
+          AI Review Replies
         </button>
         <button class="nav-btn" data-tab="posts">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          Scheduled Posts
+          Calendar & Posts
         </button>
         <button class="nav-btn" data-tab="settings">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -56,9 +56,13 @@
       </nav>
 
       <div class="sidebar-footer">
+        <button id="btn-seed-pilot" class="btn btn-seed w-full" onclick="loadPilotDemo()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+          ✨ Load Pilot Demo Profile
+        </button>
         <div class="service-status">
           <span class="status-dot online"></span>
-          <span>Isolated Port: 5005</span>
+          <span>Google API Gateway: Online</span>
         </div>
       </div>
     </aside>
@@ -68,8 +72,8 @@
       <!-- Top Bar -->
       <header class="topbar">
         <div>
-          <h1 id="page-title">Overview & Account Status</h1>
-          <p class="subtitle" id="page-subtitle">Manage Google OAuth connection and view automated activities.</p>
+          <h1 id="page-title">Overview & GMB Score Analysis</h1>
+          <p class="subtitle" id="page-subtitle">Google Business Profile Health, AI Review Replies & Post Scheduling.</p>
         </div>
         <div class="topbar-actions">
           <div id="account-pill" class="account-pill disconnected">
@@ -83,9 +87,106 @@
       <!-- Alert Notification Banner -->
       <div id="alert-banner" class="alert-banner hidden"></div>
 
-      <!-- Tab 1: Overview -->
+      <!-- Tab 1: Overview & GMB Score Analysis -->
       <section id="tab-overview" class="tab-pane active">
-        <div class="stats-grid">
+        <!-- Hero Speedometer & AI Tips Grid -->
+        <div class="hero-analysis-grid">
+          <!-- GMB Score Speedometer Card (from video) -->
+          <div class="card score-card">
+            <div class="card-header-clean">
+              <span class="badge-glow">GMB Score Analysis</span>
+              <span class="text-muted text-xs">Real-time Local Ranking</span>
+            </div>
+            <div class="gauge-container">
+              <div class="speedometer-wrapper">
+                <svg viewBox="0 0 200 120" class="speedometer-svg">
+                  <!-- Arc Path -->
+                  <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="16" stroke-linecap="round" />
+                  <path id="gauge-fill" d="M 20 100 A 80 80 0 0 1 170 80" fill="none" stroke="url(#score-gradient)" stroke-width="16" stroke-linecap="round" />
+                  <!-- Needle -->
+                  <line x1="100" y1="100" x2="155" y2="45" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" class="gauge-needle" />
+                  <circle cx="100" cy="100" r="7" fill="#38bdf8" />
+                  <defs>
+                    <linearGradient id="score-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#06b6d4" />
+                      <stop offset="50%" stop-color="#3b82f6" />
+                      <stop offset="100%" stop-color="#10b981" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div class="gauge-value-box">
+                  <div class="gauge-score" id="gmb-score-display">4,796</div>
+                  <div class="gauge-unit">GMB Score / 5,000</div>
+                </div>
+              </div>
+            </div>
+            <div class="score-submetrics">
+              <div class="submetric">
+                <span class="submetric-label">Profile Health</span>
+                <span class="submetric-val text-emerald">88% <small>Optimal</small></span>
+              </div>
+              <div class="submetric">
+                <span class="submetric-label">Search Visibility</span>
+                <span class="submetric-val text-cyan">+39% <small>MoM</small></span>
+              </div>
+              <div class="submetric">
+                <span class="submetric-label">AI Automation</span>
+                <span class="submetric-val text-violet">100% <small>Active</small></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Assistant Tips & Checklist (from video) -->
+          <div class="card tips-card">
+            <div class="card-header-clean">
+              <div class="flex items-center gap-2">
+                <span class="ai-pill">AI Assistant</span>
+                <span class="font-semibold">Profile Optimization Checklist</span>
+              </div>
+              <span class="badge-success">850% ROI</span>
+            </div>
+            <div class="tips-checklist">
+              <div class="checklist-item checked">
+                <div class="check-icon">✓</div>
+                <div class="checklist-info">
+                  <h4>Improve Business Description</h4>
+                  <p>AI aligned with high-volume local search keywords (#NearMe, #WebDevelopment)</p>
+                </div>
+                <span class="check-tag">Optimized</span>
+              </div>
+              <div class="checklist-item in-progress">
+                <div class="check-icon">📸</div>
+                <div class="checklist-info">
+                  <h4>Add More Photos</h4>
+                  <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill" style="width: 75%"></div>
+                  </div>
+                  <p>12 photos active. AI recommends +4 storefront & interior images</p>
+                </div>
+                <span class="check-tag pending">75% Done</span>
+              </div>
+              <div class="checklist-item checked">
+                <div class="check-icon">✓</div>
+                <div class="checklist-info">
+                  <h4>Reply to Customer Reviews</h4>
+                  <p>Gemini AI auto-reply engine scheduled every 15 minutes</p>
+                </div>
+                <span class="check-tag">100% Auto</span>
+              </div>
+              <div class="checklist-item checked">
+                <div class="check-icon">📅</div>
+                <div class="checklist-info">
+                  <h4>Post Regularly on Calendar</h4>
+                  <p>Active scheduled posts queue driving continuous Google Maps visibility</p>
+                </div>
+                <span class="check-tag">Scheduled</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Global Stats Cards -->
+        <div class="stats-grid mt-4">
           <div class="stat-card">
             <div class="stat-title">Connected Locations</div>
             <div class="stat-value" id="stat-locations-count">0</div>
@@ -108,14 +209,17 @@
           </div>
         </div>
 
+        <!-- Connected Locations Section -->
         <div class="card mt-4">
           <div class="card-header">
-            <h3>Connected Locations</h3>
-            <button id="btn-sync-locations" class="btn btn-secondary btn-sm">Refresh Locations</button>
+            <h3>Connected Business Locations</h3>
+            <div class="flex gap-2">
+              <button id="btn-sync-locations" class="btn btn-secondary btn-sm" onclick="initLocations()">Refresh Locations</button>
+            </div>
           </div>
           <div class="card-body">
             <div id="locations-list" class="locations-grid">
-              <div class="empty-state">No locations discovered yet. Connect your Google Business Profile account above.</div>
+              <div class="empty-state">Loading business profile locations...</div>
             </div>
           </div>
         </div>
@@ -125,23 +229,23 @@
       <section id="tab-reviews" class="tab-pane">
         <div class="pane-toolbar">
           <div class="filters">
-            <select id="filter-review-status" class="select-input">
+            <select id="filter-review-status" class="select-input" onchange="loadReviews()">
               <option value="">All Reviews</option>
               <option value="false">Unreplied Only</option>
               <option value="true">Replied Only</option>
             </select>
-            <select id="filter-review-rating" class="select-input">
+            <select id="filter-review-rating" class="select-input" onchange="loadReviews()">
               <option value="">All Star Ratings</option>
-              <option value="5">5 Stars</option>
-              <option value="4">4 Stars</option>
-              <option value="3">3 Stars</option>
-              <option value="2">2 Stars</option>
-              <option value="1">1 Star</option>
+              <option value="5">5 Stars ★★★★★</option>
+              <option value="4">4 Stars ★★★★☆</option>
+              <option value="3">3 Stars ★★★☆☆</option>
+              <option value="2">2 Stars ★★☆☆☆</option>
+              <option value="1">1 Star  ★☆☆☆☆</option>
             </select>
           </div>
-          <button id="btn-sync-reviews-now" class="btn btn-primary">
+          <button id="btn-sync-reviews-now" class="btn btn-primary" onclick="syncReviewsNow()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-            Trigger AI Review Sync Now
+            Trigger AI Review Sync & Auto-Reply
           </button>
         </div>
 
@@ -154,17 +258,56 @@
         </div>
       </section>
 
-      <!-- Tab 3: Post Scheduling -->
+      <!-- Tab 3: Post Scheduling & Interactive Calendar (from video) -->
       <section id="tab-posts" class="tab-pane">
+        <!-- Interactive Visual Calendar View -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <div class="flex items-center gap-3">
+              <h3 id="calendar-month-year">October 2026</h3>
+              <span class="badge">Visual Post Schedule</span>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary btn-sm" onclick="changeMonth(-1)">◀ Prev Month</button>
+              <button class="btn btn-secondary btn-sm" onclick="changeMonth(1)">Next Month ▶</button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="calendar-grid-header">
+              <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+            </div>
+            <div id="calendar-days" class="calendar-days-grid">
+              <!-- Dynamically populated by app.js -->
+            </div>
+          </div>
+        </div>
+
         <div class="grid-2-col">
-          <!-- Scheduling Form -->
+          <!-- Scheduling Form with Keyword Targeting (from video) -->
           <div class="card">
             <div class="card-header">
-              <h3>Create Scheduled Post</h3>
+              <h3>Create & Schedule GMB Post</h3>
+              <button type="button" class="btn btn-ai-write btn-sm" onclick="generateAiPostCaption()">
+                ✨ Write with Gemini AI
+              </button>
             </div>
             <div class="card-body">
-              <form id="form-create-post">
-                <div class="form-group">
+              <!-- Keyword Targeting Pills Bar -->
+              <div class="keyword-targeting-section">
+                <label class="text-xs font-semibold text-muted">🎯 Keyword Targeting (Click to insert):</label>
+                <div class="keyword-pills-bar">
+                  <button type="button" class="kw-pill" onclick="insertKeyword('#LocalBusiness')">#LocalBusiness</button>
+                  <button type="button" class="kw-pill" onclick="insertKeyword('#NearMe')">#NearMe</button>
+                  <button type="button" class="kw-pill" onclick="insertKeyword('#BestService')">#BestService</button>
+                  <button type="button" class="kw-pill" onclick="insertKeyword('#TopAgency')">#TopAgency</button>
+                  <button type="button" class="kw-pill" onclick="insertKeyword('#SpecialOffer')">#SpecialOffer</button>
+                  <button type="button" class="kw-pill" onclick="insertKeyword('#WebDevelopment')">#WebDevelopment</button>
+                  <button type="button" class="kw-pill" onclick="insertKeyword('#GoogleRanking')">#GoogleRanking</button>
+                </div>
+              </div>
+
+              <form id="form-create-post" onsubmit="handleCreatePost(event)">
+                <div class="form-group mt-3">
                   <label for="post-location-select">Target Location</label>
                   <select id="post-location-select" class="form-input" required>
                     <option value="">Select a location...</option>
@@ -172,13 +315,19 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="post-summary">Post Caption / Content</label>
-                  <textarea id="post-summary" class="form-input" rows="4" placeholder="Write your Google update, news, announcement, or promotional offer..." required></textarea>
+                  <label for="post-summary">Post Caption / Update Content</label>
+                  <textarea id="post-summary" class="form-input" rows="4" placeholder="Write your Google update, news, announcement, or click '✨ Write with Gemini AI'..." required></textarea>
                 </div>
 
                 <div class="form-group">
-                  <label for="post-image-url">Image URL (Optional)</label>
-                  <input type="url" id="post-image-url" class="form-input" placeholder="https://example.com/banner.jpg">
+                  <label for="post-image-url">Image / Media URL</label>
+                  <input type="url" id="post-image-url" class="form-input" placeholder="https://images.unsplash.com/photo-1498050108023-c5249f4df085...">
+                  <div class="image-preview-bar mt-2 flex gap-2">
+                    <span class="text-xs text-muted">Presets:</span>
+                    <button type="button" class="preset-img-btn" onclick="setImagePreset('https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80')">Tech Office</button>
+                    <button type="button" class="preset-img-btn" onclick="setImagePreset('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80')">Customer Meeting</button>
+                    <button type="button" class="preset-img-btn" onclick="setImagePreset('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80')">Special Launch</button>
+                  </div>
                 </div>
 
                 <div class="form-row">
@@ -186,17 +335,15 @@
                     <label for="post-cta-type">Action Button (CTA)</label>
                     <select id="post-cta-type" class="form-input">
                       <option value="LEARN_MORE">Learn More</option>
-                      <option value="BOOK">Book</option>
-                      <option value="ORDER">Order Online</option>
-                      <option value="SHOP">Shop</option>
-                      <option value="SIGN_UP">Sign Up</option>
+                      <option value="BOOK">Book Appointment</option>
                       <option value="CALL">Call Now</option>
-                      <option value="ACTION_TYPE_UNSPECIFIED">None</option>
+                      <option value="ORDER">Order Online</option>
+                      <option value="SIGN_UP">Sign Up</option>
                     </select>
                   </div>
                   <div class="form-group">
                     <label for="post-cta-url">Button URL</label>
-                    <input type="url" id="post-cta-url" class="form-input" placeholder="https://yourwebsite.com/offer">
+                    <input type="url" id="post-cta-url" class="form-input" value="https://tekchand.tech" placeholder="https://yourwebsite.com">
                   </div>
                 </div>
 
@@ -205,7 +352,10 @@
                   <input type="datetime-local" id="post-scheduled-at" class="form-input" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-full">Schedule Post</button>
+                <div class="flex gap-2">
+                  <button type="submit" class="btn btn-primary flex-1">📅 Schedule Post to Calendar</button>
+                  <button type="button" class="btn btn-secondary" onclick="postInstantly()">⚡ Post Instantly</button>
+                </div>
               </form>
             </div>
           </div>
@@ -214,18 +364,18 @@
           <div class="card">
             <div class="card-header">
               <h3>Scheduled Posts Queue</h3>
-              <button id="btn-dispatch-posts-now" class="btn btn-secondary btn-sm">Force Dispatch Check</button>
+              <button id="btn-dispatch-posts-now" class="btn btn-secondary btn-sm" onclick="dispatchPostsNow()">Force Dispatch Check</button>
             </div>
             <div class="card-body">
               <div id="posts-queue" class="posts-queue">
-                <div class="empty-state">No scheduled posts found.</div>
+                <div class="empty-state">Loading posts queue...</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Tab 4: Location Directives / Settings -->
+      <!-- Tab 4: Location Directives -->
       <section id="tab-settings" class="tab-pane">
         <div class="card">
           <div class="card-header">
