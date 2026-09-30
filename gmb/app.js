@@ -643,7 +643,7 @@ async function generateAiPostCaption() {
       showAlert('AI Post Caption generated successfully!', 'success');
     }
   } catch (err) {
-    textarea.value = '🚀 Boost your local visibility and automate customer reviews with Tekchand AI Solutions! Discover how intelligent automation drives more customers. Visit us today! #LocalBusiness #NearMe #BestService';
+    textarea.value = '🚀 Boost your local visibility and automate customer reviews with Tekchand Tech! Discover how intelligent automation drives more customers. Visit us today! #LocalBusiness #NearMe #BestService';
   } finally {
     if (btn) btn.textContent = '✨ Write with Gemini AI';
   }
