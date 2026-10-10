@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Tekchand Tech",
+  "name": "Tekchand Tech - Computer Consultancy & Cloud Solutions",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,6 +10,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#0d6efd",
+  "background_color": "#06080e"
 }
+

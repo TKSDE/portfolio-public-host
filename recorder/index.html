@@ -599,9 +599,9 @@
 
 <script>
   // API URL resolution: handles direct file opening, port 3000, and server execution
-  const API_BASE = (window.location.protocol === 'file:' || window.location.port === '3000')
-    ? 'http://localhost:5000'
-    : '';
+  const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? (window.location.port === '5000' ? '' : 'http://localhost:5000')
+    : 'https://api.tekchand.tech';
 
   const folderPathText = document.getElementById('folderPathText');
   const openFolderBtn = document.getElementById('openFolderBtn');
