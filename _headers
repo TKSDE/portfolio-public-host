@@ -9,7 +9,7 @@
   Cache-Control: public, max-age=31536000, immutable
 
 /favicon.ico
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=0, must-revalidate
 
 # WebP images — served with correct MIME type and aggressive caching
 /*.webp
