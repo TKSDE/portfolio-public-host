@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="50%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- High-contrast rounded squircle background (stands out on both dark and light browser tab bars) -->
+  <rect x="20" y="20" width="472" height="472" rx="116" fill="url(#bgGrad)" />
+  <rect x="24" y="24" width="464" height="464" rx="112" fill="none" stroke="#93c5fd" stroke-width="8" stroke-opacity="0.45" />
+
+  <!-- Bold, iconic 3D Enterprise Tech Layers (Tekchand Tech Command Emblem) -->
+  <g filter="url(#shadow)" fill="none" stroke="#ffffff" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Top Layer / Diamond -->
+    <path d="M256 100 L420 185 L256 270 L92 185 Z" fill="rgba(255, 255, 255, 0.28)" />
+    
+    <!-- Middle Layer -->
+    <path d="M92 270 L256 355 L420 270" />
+    
+    <!-- Bottom Layer -->
+    <path d="M92 355 L256 440 L420 355" />
+  </g>
+</svg>
